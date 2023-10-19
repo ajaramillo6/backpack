@@ -1,0 +1,56 @@
+.profile, .profileOut{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    width: max-content;
+}
+
+.profileName{
+    font-weight: bold;
+}
+
+.profilePicContainer{
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+
+.profilePic{
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: gray;
+}
+
+.btn{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: 1px solid var(--textColor);
+}
+
+.icon{
+    transition: 0.5s all ease;
+}
+
+.iconActive{
+    transform:rotate(180deg);
+    transition: 0.5s all ease;
+}
+
+@media screen and (max-width: 768px) {
+
+    .profileName{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .profileOut{
+        display: none;
+    }
+}

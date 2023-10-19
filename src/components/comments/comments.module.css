@@ -1,0 +1,48 @@
+.container{
+    margin-top: 50px;
+}
+
+.title{
+    color: var(--softTextColor);
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+
+.write{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.notAuthText{
+    font-style: italic;
+    text-decoration: underline;
+    color: var(--softTextColor);
+    font-weight: 300;
+}
+
+.input{
+    padding: 20px;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--softBg);
+    border-radius: 15px;
+    color: var(--textColor);
+    outline: none;
+}
+
+.button{
+    padding: 10px 15px;
+    border: 1px solid var(--softTextColor);
+    border-radius: 50px;
+    background-color: transparent;
+    width: 100px;
+    color: var(--softTextColor);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comments{
+    margin-top: 50px;
+}

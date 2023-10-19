@@ -1,0 +1,36 @@
+.container{
+    flex: 5;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 50px 0px;
+}
+
+.title{
+   
+}
+
+.all{
+    color: grey;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.all:hover{
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px){
+    .container{
+        flex: auto;
+    }
+    .title{
+        font-size: 22px;
+    }
+    .all{
+        font-size: 14px;
+    }
+}

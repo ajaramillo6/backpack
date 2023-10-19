@@ -1,0 +1,48 @@
+.container{
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    display: flex;
+    padding: 15px;
+    border-radius: 15px;
+    z-index: 999;
+    width: 220px;
+    gap: 20px;
+    overflow: hidden;
+    background-color: var(--softBg);
+}
+
+.leftContainer, .rightContainer{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease-in-out;
+    cursor: auto;
+}
+
+.link, .linkTheme{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    width: 190px;
+}
+
+.link:hover{
+    background-color: var(--bg);
+    cursor: pointer;
+}
+
+.linkSettingsText{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@media screen and (max-width: 650px){
+    .link:nth-child(3){
+        display: none;
+    }
+}
+

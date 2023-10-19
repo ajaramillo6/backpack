@@ -1,0 +1,91 @@
+.container{}
+
+.input{
+    padding: 25px;
+    width: 70%;
+    font-size: 32px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--textColor);
+}
+
+.input::placeholder{
+    color: #b3b3b1;
+}
+
+.selectWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0px 45px 0px;
+    gap: 15px;
+}
+
+.select{
+    font-size: 20px;
+    outline: none;
+    border: none;
+    width: 200px;
+    cursor: pointer;
+    margin-right: 20px;
+    color: var(--softTextColor);
+    font-style: oblique;
+    background-color: var(--bg);
+    font-size: 18px;
+}
+
+.editor{
+    display: flex;
+    gap: 15px;
+    height: 700px;
+    position: relative;
+}
+
+.addButton{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid var(--softTextColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--softTextColor);
+    cursor: pointer;
+}
+
+.add{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--bg);
+}
+
+.addButton:hover{
+    border-color: var(--textColor);
+    color: var(--textColor);
+}
+
+.textArea{
+    width: 100%;
+}
+
+.publish{
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+    color: var(--textColor);
+    border: 1px solid var(--textColor);
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.publish:hover{
+    color: var(--mainColor);
+    border: 1px solid var(--mainColor);
+}

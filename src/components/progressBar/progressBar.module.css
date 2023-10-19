@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 10px;
+}
+
+.bar{
+    position: relative;
+    overflow: hidden;
+    width: 200px;
+    height: 2px;
+    border-radius: 5px;
+    background-color: var(--softBg);
+}
+
+.fill{
+    background-color: var(--mainColor);
+    transition: width 0.5s;
+    height: 100%;
+}
+
+.text{
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--softTextColor);
+}

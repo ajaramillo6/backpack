@@ -1,0 +1,84 @@
+.container{
+    margin-top: 50px;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--softTextColor);
+    align-items: center;
+    font-size: 14px;
+}
+
+.info{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoText{
+    font-size: 24px;
+}
+
+.desc{
+    font-weight: 300;
+}
+
+.icons{
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.links{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 100px;
+}
+
+.list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 300;
+}
+
+.listTitle{
+    font-weight: bold;
+}
+
+.link:hover{
+    color: var(--textColor);
+}
+
+@media screen and (max-width: 1024px) {
+    .links{
+        gap: 50px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container{
+        flex-direction: column;
+        gap: 50px;
+    }
+    .links{
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .container{
+        font-size: 12px;
+    }
+    .logoText{
+        font-size: 18px;
+    }
+}
