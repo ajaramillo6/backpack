@@ -8,6 +8,7 @@ export const GET = async (req)=>{
 
     const page = searchParams.get("page");
     const cat = searchParams.get("cat");
+    const country = searchParams.get("country");
 
     const POST_PER_PAGE = 4;
 
@@ -21,6 +22,7 @@ export const GET = async (req)=>{
         ],
         where: {
             ...(cat && { catSlug: cat }),
+            ...(country && { country }),
         },
         include: { user: true },
     }

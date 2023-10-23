@@ -3,10 +3,10 @@ import styles from "./menu.module.css";
 import Card from '../card/Card';
 import { getFavorites, getPopular } from '@/src/getData';
 
-const Menu = async ({ type, cat, currPost }) => {
+const Menu = async ({ type, cat, currPost, country }) => {
 
-  const favorites  = await getFavorites(cat);
-  const popular  = await getPopular(cat);
+  const favorites  = await getFavorites(cat, country);
+  const popular  = await getPopular(cat, country);
 
   return (
     <div className={styles.container}>

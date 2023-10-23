@@ -7,20 +7,3 @@
     margin-left: auto;
     padding-bottom: 2px;
 }
-
-.countryList{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--softTextColor);
-    outline: none;
-    font-size: 14px;
-    font-weight: 300;
-    font-style: italic;
-}
-
-@media screen and (max-width: 768px) {
-    .countryList{
-        font-size: 12px;
-    }
-}

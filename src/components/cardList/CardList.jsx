@@ -4,9 +4,9 @@ import Pagination from '../pagination/Pagination';
 import Card from '../card/Card';
 import { getPosts } from "../../getData";
 
-const CardList = async({ page, cat, type }) => {
+const CardList = async({ page, cat, type, country }) => {
 
-  const { posts, count } = await getPosts(page, cat);
+  const { posts, count } = await getPosts(page, cat, country);
 
   const POST_PER_PAGE = 4;
 

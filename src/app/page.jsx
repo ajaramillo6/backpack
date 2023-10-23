@@ -9,6 +9,7 @@ import CountryFilter from '../components/countryFilter/CountryFilter'
 export default function Home({ searchParams }) {
 
   const page = parseInt(searchParams.page) || 1;
+  const country = searchParams.country
 
   return (
     <div className={styles.container}>
@@ -16,8 +17,8 @@ export default function Home({ searchParams }) {
       <CategoryList />
       <CountryFilter />
       <div className={styles.content}>
-        <CardList page={page} />
-        <Menu />
+        <CardList page={page} country={country} />
+        <Menu country={country} />
       </div>
     </div>
   )

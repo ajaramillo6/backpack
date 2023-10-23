@@ -8,16 +8,17 @@ const BlogPage = ({ searchParams }) => {
 
   const page = parseInt(searchParams.page) || 1;
   const { cat } = searchParams;
+  const country = searchParams.country
 
   return (
     <div className={styles.container}>
         <div className={styles.top}>
             <div className={styles.pickedCategory}>{ cat }</div>
-            <CountryFilter />
+            <CountryFilter cat={cat} />
         </div>
         <div className={styles.content}>
-            <CardList page={page} cat={cat} type={"blog"} />
-            <Menu cat={cat} type={"blog"} />
+            <CardList page={page} cat={cat} type={"blog"} country={country} />
+            <Menu cat={cat} type={"blog"} country={country} />
         </div>
     </div>
   )

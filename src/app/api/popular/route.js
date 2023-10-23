@@ -6,6 +6,7 @@ export const GET = async (req) => {
 
   const { searchParams } = new URL(req.url);
   const cat = searchParams.get("cat");
+  const country = searchParams.get("country");
 
   try {
     const popular = await prisma.post.findMany({
@@ -19,6 +20,7 @@ export const GET = async (req) => {
       ],
       where: {
         ...(cat && { catSlug: cat }),
+        ...(country && { country }),
       },
       include: { user: true },
     });

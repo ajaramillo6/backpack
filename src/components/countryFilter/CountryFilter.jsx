@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from './countryFilter.module.css';
-import { countryListAllIsoData } from '@/src/countries'
+import { getPopular } from '@/src/getData';
+import FilterOption from '../filterOption/FilterOption';
 
-const CountryFilter = () => {
+const CountryFilter = async({cat}) => {
+
+  const posts = await getPopular(cat);
+
   return (
     <div className={styles.container}>
-        <select className={styles.countryList}>
-            {countryListAllIsoData.map((country)=>(
-            <option className={styles.country}>{country.name}</option>
-            ))}
-        </select>
+      <FilterOption posts={posts} cat={cat} />
     </div>
   )
 }

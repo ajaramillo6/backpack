@@ -10,8 +10,8 @@ export const getSinglePost = async (slug) => {
     return res.json();
 };
 
-export const getPosts = async (page, cat)=>{
-    const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}`, {
+export const getPosts = async (page, cat, country)=>{
+    const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
@@ -20,8 +20,8 @@ export const getPosts = async (page, cat)=>{
     return res.json()
 }
 
-export const getFavorites = async (cat)=>{
-    const res = await fetch(`http://localhost:3000/api/favorites?cat=${cat || ""}`, {
+export const getFavorites = async (cat, country)=>{
+    const res = await fetch(`http://localhost:3000/api/favorites?cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
@@ -30,8 +30,8 @@ export const getFavorites = async (cat)=>{
     return res.json()
 }
 
-export const getPopular = async (cat)=>{
-    const res = await fetch(`http://localhost:3000/api/popular?cat=${cat || ""}`, {
+export const getPopular = async (cat, country)=>{
+    const res = await fetch(`http://localhost:3000/api/popular?cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
