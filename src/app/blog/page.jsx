@@ -16,8 +16,8 @@ const BlogPage = ({ searchParams }) => {
             <CountryFilter />
         </div>
         <div className={styles.content}>
-            <CardList page={page} cat={cat} />
-            <Menu />
+            <CardList page={page} cat={cat} type={"blog"} />
+            <Menu cat={cat} type={"blog"} />
         </div>
     </div>
   )

@@ -4,14 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { numberFormat, timeSince } from '../Format';
 
-const Card = ({ post, type, key }) => {
+const Card = ({ post, type, key, imgSize }) => {
 
   return (
-    <div className={type === 'lg' ? styles.container : styles.containerSm} key={key}>
-        {(type !== 'sm' && post.img) && (
-        <div className={type === 'lg' ? styles.imageContainer : type !== 'recommendationImg' ? styles.imageContainerSm : styles.imageContainerRecommendation}>
+    <div className={imgSize === 'lg' ? styles.container : styles.containerSm} key={key}>
+        {(imgSize !== 'sm' && post.img) && (
+        <div className={imgSize === 'lg' ? styles.imageContainer : type !== 'recommendations' ? styles.imageContainerSm : styles.imageContainerRecommendation}>
             <Image 
-                className={type === 'lg' 
+                className={imgSize === 'lg' 
                     ? styles.image 
                     : styles.imageSm} 
                 src={post.img} 
@@ -20,22 +20,24 @@ const Card = ({ post, type, key }) => {
                 objectFit='cover' 
             />
         </div>)}
-        <div className={type === 'lg' ? styles.textContainer : styles.textContainerSm}>
+        <div className={imgSize === 'lg' ? styles.textContainer : styles.textContainerSm}>
             <div>
-                <span className={type === 'lg' ? styles.username : styles.usernameSm}>{post.user?.name}</span>
+                <span className={imgSize === 'lg' ? styles.username : styles.usernameSm}>{post.user?.name}</span>
+                {((type !== 'recommendations') && (type !== 'blog')) && <>
                 <span> - </span>
                 <Link href={`/blog?cat=${post.catSlug}`}>
-                    <span className={type === 'lg' 
+                    <span className={imgSize === 'lg' 
                         ? styles.categoryLg 
                         : styles.category
                         }>{post.catSlug}
                     </span>
                 </Link>
+                </>}
             </div>
-            <h1 className={type === 'lg' ? styles.title : styles.titleSm}>
+            <h1 className={imgSize === 'lg' ? styles.title : styles.titleSm}>
                 <Link className={styles.link} href={`/posts/${post.slug}`}>{post.title}</Link>
             </h1>
-            {type === 'lg' &&
+            {imgSize === 'lg' &&
             <div 
                 className={styles.desc} 
                 dangerouslySetInnerHTML={{ __html:post?.desc }} 
@@ -44,7 +46,7 @@ const Card = ({ post, type, key }) => {
                 <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(post.createdAt))}</span>
                 <span className={styles.likes}>{numberFormat(post.likes)} likes</span>
             </div>
-            {type === 'lg' && <Link className={styles.linkRead} href={`/posts/${post.slug}`}>Read More</Link>}
+            {imgSize === 'lg' && <Link className={styles.linkRead} href={`/posts/${post.slug}`}>Read More</Link>}
         </div>
     </div>
   )

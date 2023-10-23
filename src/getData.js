@@ -20,6 +20,26 @@ export const getPosts = async (page, cat)=>{
     return res.json()
 }
 
+export const getFavorites = async (cat)=>{
+    const res = await fetch(`http://localhost:3000/api/favorites?cat=${cat || ""}`, {
+        cache: "no-store",
+    });
+    if(!res.ok){
+        throw new Error("failed");
+    }
+    return res.json()
+}
+
+export const getPopular = async (cat)=>{
+    const res = await fetch(`http://localhost:3000/api/popular?cat=${cat || ""}`, {
+        cache: "no-store",
+    });
+    if(!res.ok){
+        throw new Error("failed");
+    }
+    return res.json()
+}
+
 export const getCategories = async ()=>{
     const res = await fetch("http://localhost:3000/api/categories", {
         cache: "no-store",

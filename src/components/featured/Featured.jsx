@@ -9,7 +9,7 @@ const Featured = async() => {
       <h1 className={styles.title}>
         Top Places to Travel in {new Date().getFullYear()}
       </h1>
-      <Slider />
+      {/* <Slider /> */}
     </div>
   )
 }

@@ -3,7 +3,6 @@ import styles from './comment.module.css';
 import Image from 'next/image';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { timeSince } from '../Format';
 
 const Comment = ({ key, comment }) => {
@@ -32,14 +31,6 @@ const Comment = ({ key, comment }) => {
           <div className={styles.icons}>
             <FavoriteBorderIcon />
             <MoreHorizIcon />
-          </div>
-        </div>
-      </div>
-      <div className={styles.bottom}>
-        <div className={styles.replies}>
-          <span>2 replies</span>
-          <div>
-            <ArrowDropDownIcon />
           </div>
         </div>
       </div>

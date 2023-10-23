@@ -4,11 +4,11 @@ import Pagination from '../pagination/Pagination';
 import Card from '../card/Card';
 import { getPosts } from "../../getData";
 
-const CardList = async({ page, cat }) => {
+const CardList = async({ page, cat, type }) => {
 
   const { posts, count } = await getPosts(page, cat);
 
-  const POST_PER_PAGE = 2;
+  const POST_PER_PAGE = 4;
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 
@@ -22,7 +22,7 @@ const CardList = async({ page, cat }) => {
       </div>
       <div className={styles.posts}>
         {posts?.map((post, idx)=>(
-          <Card key={idx} post={post} type="lg" />
+          <Card key={idx} post={post} imgSize="lg" type={type} />
         ))}
       </div>
       <Pagination 

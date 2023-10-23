@@ -62,7 +62,7 @@ const SinglePage = async ({ params }) => {
                     <Comments postSlug={slug} />
                 </div>
             </div>
-            <Menu type="recommendations" />
+            <Menu type="recommendations" currPost={data} />
         </div>
     </div>
   )

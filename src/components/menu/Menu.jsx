@@ -1,48 +1,12 @@
 import React from 'react'
 import styles from "./menu.module.css";
 import Card from '../card/Card';
+import { getFavorites, getPopular } from '@/src/getData';
 
-const Menu = ({ type }) => {
+const Menu = async ({ type, cat, currPost }) => {
 
-
-  const posts = [
-    {
-        id: 1,
-        img: "/featured.jpg",
-        category: "tropical",
-        username: "Hazy",
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: "5 days ago",
-        likes: 120000,
-    },
-    {
-        id: 2,
-        img: "/featured.jpg",
-        category: "beach",
-        username: "Hazy",
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: "5 days ago",
-        likes: 120000,
-    },
-    {
-        id: 3,
-        img: "/featured.jpg",
-        category: "forest",
-        username: "Hazy",
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: "5 days ago",
-        likes: 120000,
-    },
-    {
-        id: 4,
-        img: "/featured.jpg",
-        category: "lake",
-        username: "Hazy",
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        date: "5 days ago",
-        likes: 120000,
-    }
-]
+  const favorites  = await getFavorites(cat);
+  const popular  = await getPopular(cat);
 
   return (
     <div className={styles.container}>
@@ -55,11 +19,12 @@ const Menu = ({ type }) => {
           </div>
           <h1 className={styles.all}>SEE ALL</h1>
         </div>
-        <div className={type !== 'recommendations' ? styles.cardsWrapper:styles.cardWrapperRecommendation}>
-        {posts.map((post)=>(
-          <Card post={post} type="sm" />
-        ))}
-        </div>
+        {(type !== 'recommendations') &&
+        <div className={styles.cardsWrapper}>
+          {favorites?.map((post)=>(
+            <Card post={post} imgSize="sm" key={post._id} type={type} />
+          ))}
+        </div>}
       </>}
       <div className={styles.header}>
         <div className={styles.leftHeader}>
@@ -68,11 +33,17 @@ const Menu = ({ type }) => {
         </div>
         {type !== 'recommendations' && <h1 className={styles.all}>SEE ALL</h1>}
       </div>
-      <div className={type !== 'recommendations' ? styles.cardsWrapper:styles.cardWrapperRecommendation}>
-      {posts.map((post)=>(
-        <Card post={post} type={type !== 'recommendations' ? "smImg":"recommendationImg"} />
+      {type !== 'recommendations' ? 
+      <div className={styles.cardsWrapper}>
+      {popular?.map((post)=>(
+        <Card post={post} type={type} />
       ))}
       </div>
+      :<div className={styles.cardWrapperRecommendation}>
+        {popular?.filter((post)=>post?.catSlug === currPost?.catSlug).map((post)=>(
+          <Card post={post} type={type} />
+        ))}
+      </div>}
     </div>
   )
 }
