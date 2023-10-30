@@ -98,12 +98,14 @@ const WritePage = () => {
     <div className={styles.container}>
       <div className={styles.topWrapper}>
         <input 
-          type="file" 
-          id="image" 
-          onChange={e=>setFile(e.target.files[0])} 
+          type="file"
+          accept=".jpeg, .jpg, .png"
           style={{display: "none"}}
+          id="image"
+          name="image"
+          onChange={(e)=>setFile(e.target.files[0])}
         />
-        {(progress !== 100) ?
+        {(!file && progress !== 100) ?
         <div className={styles.addButtonImg}>
           <label htmlFor="image" style={{cursor: "pointer"}}>
             <AddPhotoAlternateIcon style={{fontSize: "40px"}} />

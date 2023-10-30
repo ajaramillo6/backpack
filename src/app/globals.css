@@ -16,7 +16,7 @@
   --textColor: black;
   --softBg: #f0f0f0;
   --softTextColor: #626262;
-  --mainColor: crimson;
+  --mainColor: rgb(20, 127, 220);
   --transparentBg: #000000bb;
   --danger: rgb(212, 22, 22);
 }
@@ -26,7 +26,7 @@
   --textColor: #ddd;
   --softBg: #18181a;
   --softTextColor:#a6a6a6;
-  --mainColor: crimson;
+  --mainColor: rgb(20, 127, 220);
   --transparentBg: #000000bb;
   --danger: rgb(212, 22, 22);
 }

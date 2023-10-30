@@ -11,15 +11,20 @@
     z-index: 99999;
 }
 
-.wrapper{
+.subContainer{
     width: 600px;
-    background-color: var(--bg);
+    background-color: var(--softBg);
     color: var(--textColor);
     padding: 20px;
     border-radius: 5px;
     display: flex;
     gap: 20px;
     position: relative;
+    flex-direction: column;
+}
+
+.wrapper{
+    display: flex;
     justify-content: space-between;
 }
 
@@ -53,6 +58,11 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--textColor);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .contentBtn{
@@ -84,7 +94,7 @@
     margin-right: 20px;
     color: var(--softTextColor);
     font-style: oblique;
-    background-color: var(--bg);
+    background-color: var(--softBg);
 }
 
 .right{
@@ -100,13 +110,35 @@
 }
 
 .img{
-    border-radius: 20px;;
+    border-radius: 20px;
+    object-fit: cover;
 }
 
 .subText{
     font-size: 14px;
     cursor: pointer;
     color: var(--softTextColor);
+}
+
+.btnsWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.saveBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: 1px solid var(--mainColor);
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100px;
+    background-color: transparent;
+    color: var(--mainColor);
 }
 
 .deleteBtn{
@@ -121,5 +153,4 @@
     width: 100px;
     background-color: transparent;
     color: var(--danger);
-    align-self: flex-end;
 }
