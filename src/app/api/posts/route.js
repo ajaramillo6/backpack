@@ -76,3 +76,40 @@ export const POST = async (req) => {
       );
     }
   };
+
+// DELETE A POST
+export const DELETE = async (req) => {
+  const session = await getAuthSession();
+
+  if(!session){
+    return new NextResponse(
+      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+    );
+  }
+
+  const body = await req.json();
+
+  try {
+    if(session.user.email === body.userEmail){
+      await prisma.post.delete({
+        where: { 
+          id: body.id,
+          slug: body.slug,
+          userEmail: body.userEmail,
+        },
+      });
+    } else {
+      return new NextResponse(
+        JSON.stringify({ message: "You are not allowed to delete this post!" }, { status: 500 })
+      );
+    }
+    return new NextResponse.json({
+      message: "Post deleted successfully"
+    });
+  } catch (err) {
+    console.log(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+};

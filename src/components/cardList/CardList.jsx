@@ -8,7 +8,7 @@ const CardList = async({ page, cat, type, country }) => {
 
   const { posts, count } = await getPosts(page, cat, country);
 
-  const POST_PER_PAGE = 4;
+  const POST_PER_PAGE = 5;
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 
@@ -16,15 +16,21 @@ const CardList = async({ page, cat, type, country }) => {
 
   return (
     <div className={styles.container}>
+      {posts?.length > 0 &&
       <div className={styles.header}>
         <h1 className={styles.title}>Recently Added</h1>
-        <h1 className={styles.all}>SEE ALL</h1>
-      </div>
+      </div>}
+      {posts?.length > 0 ?
       <div className={styles.posts}>
-        {posts?.map((post, idx)=>(
-          <Card key={idx} post={post} imgSize="lg" type={type} />
+        {posts?.map((post)=>(
+          <div key={post._id}>
+            <Card post={post} imgSize="lg" type={type} />
+          </div>
         ))}
       </div>
+      :<div>
+          No posts available!
+      </div>}
       <Pagination 
         page={page} 
         havePrev={havePrev} 

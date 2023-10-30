@@ -6,7 +6,6 @@ import Link from 'next/link';
 import AuthLinks from '../authLinks/AuthLinks';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 const Navbar = () => {
 
@@ -36,7 +35,6 @@ const Navbar = () => {
       <div className={!open ? styles.links:styles.linksOut}>
         <Link className={!open ? styles.link:styles.linkOut} href='/'>Home</Link>
         <Link className={!open ? styles.link:styles.linkOut} href='/'>Saved</Link>
-        <div className={!open ? styles.link:styles.linkOut}><NotificationsNoneIcon /></div>
         <AuthLinks open={open} />
       </div>
     </div>

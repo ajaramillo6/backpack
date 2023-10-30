@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { numberFormat, timeSince } from '../Format';
 
-const Card = ({ post, type, key, imgSize }) => {
+const Card = ({ post, type, imgSize }) => {
 
   return (
-    <div className={imgSize === 'lg' ? styles.container : styles.containerSm} key={key}>
+    <div className={imgSize === 'lg' ? styles.container : styles.containerSm}>
         {(imgSize !== 'sm' && post.img) && (
         <div className={imgSize === 'lg' ? styles.imageContainer : type !== 'recommendations' ? styles.imageContainerSm : styles.imageContainerRecommendation}>
             <Image 

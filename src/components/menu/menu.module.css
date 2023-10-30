@@ -21,22 +21,12 @@
     font-style: italic;
 }
 
-.title, .titleSecondary, .titleRecommendation{
+.title, .titleSecondary{
     font-size: 28px;
 }
 
-.all{
-    color: grey;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.all:hover{
-    text-decoration: underline;
-}
-
 .cardsWrapper, .cardWrapperRecommendation{
-    margin: 35px 0px 60px 0px;
+    margin: 35px 5px 60px 0px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -59,11 +49,7 @@
     .titleSecondary{
         display: none;
     }
-
     .cardsWrapper{
-        display: none;
-    }
-    .all{
         display: none;
     }
 }

@@ -9,7 +9,7 @@ import CountryFilter from '../components/countryFilter/CountryFilter'
 export default function Home({ searchParams }) {
 
   const page = parseInt(searchParams.page) || 1;
-  const country = searchParams.country
+  const country = searchParams.country;
 
   return (
     <div className={styles.container}>

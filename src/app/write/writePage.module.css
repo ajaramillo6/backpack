@@ -1,8 +1,37 @@
 .container{}
 
+.topWrapper{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.imgContainer{
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.image{
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.progress{
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--softTextColor);
+}
+
+.rightWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+}
+
 .input{
     padding: 25px;
-    width: 70%;
     font-size: 32px;
     border: none;
     outline: none;
@@ -23,7 +52,6 @@
 }
 
 .select{
-    font-size: 20px;
     outline: none;
     border: none;
     width: 200px;
@@ -55,6 +83,21 @@
     cursor: pointer;
 }
 
+.addButtonImg{
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 1px solid var(--softTextColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--softTextColor);
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+}
+
 .add{
     display: flex;
     flex-direction: column;
@@ -69,6 +112,7 @@
 
 .textArea{
     width: 100%;
+    overflow-y: auto;
 }
 
 .publish{

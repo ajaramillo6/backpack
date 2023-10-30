@@ -17,6 +17,8 @@
   --softBg: #f0f0f0;
   --softTextColor: #626262;
   --mainColor: crimson;
+  --transparentBg: #000000bb;
+  --danger: rgb(212, 22, 22);
 }
 
 .dark{
@@ -25,6 +27,8 @@
   --softBg: #18181a;
   --softTextColor:#a6a6a6;
   --mainColor: crimson;
+  --transparentBg: #000000bb;
+  --danger: rgb(212, 22, 22);
 }
 
 body{

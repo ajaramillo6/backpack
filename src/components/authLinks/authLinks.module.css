@@ -31,6 +31,8 @@
     padding: 5px 10px;
     border-radius: 30px;
     border: 1px solid var(--textColor);
+    cursor: pointer;
+    position: relative;
 }
 
 .icon{

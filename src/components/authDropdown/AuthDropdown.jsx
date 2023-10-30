@@ -9,9 +9,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { signOut } from 'next-auth/react';
+import GoogleIcon from '@mui/icons-material/Google';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import Spinner from '../spinner/Spinner';
 
 const AuthDropdown = ({ setOpen, setMouseInZone }) => {
+
+  const { status } = useSession();
+
+  if(status === "Loading"){
+    return <Spinner />
+  }
 
   const [index, setIndex] = useState(0);
 
@@ -25,6 +33,8 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
 }
 
   return (
+  <>
+  {(status === 'authenticated') ?
     <div 
       className={styles.container}
       onMouseEnter={()=>setMouseInZone(true)}
@@ -58,6 +68,18 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
         </div>
       </div>
     </div>
+    :<div 
+      className={styles.container}
+      onMouseEnter={()=>setMouseInZone(true)}
+      onMouseLeave={()=>setMouseInZone(false)}
+      onBlur={()=>setOpen(false)}
+      tabIndex="0">
+      <div className={styles.link} onClick={()=>signIn("google")}>
+        <GoogleIcon style={{fontSize: "18px"}} />
+        <span>Log in with Google</span>
+      </div>
+    </div>}
+  </>
   )
 }
 

@@ -1,0 +1,125 @@
+.container{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--transparentBg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.wrapper{
+    width: 600px;
+    background-color: var(--bg);
+    color: var(--textColor);
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.closeBtn{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:3px;
+    border-radius: 3px;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    background-color: var(--softBg);
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.textWrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.text{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--textColor);
+}
+
+.contentBtn{
+    display: flex;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--mainColor);
+    margin-left: 10px;
+}
+
+.input{
+    border: none;
+    background-color: transparent;
+    width: 200px;
+    outline: none;
+    color:var(--textColor);
+}
+
+.select{
+    font-size: 14px;
+    outline: none;
+    border: none;
+    width: 150px;
+    cursor: pointer;
+    margin-right: 20px;
+    color: var(--softTextColor);
+    font-style: oblique;
+    background-color: var(--bg);
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.imgWrapper{
+    position: relative;
+    height: 200px;
+    width: 200px;
+}
+
+.img{
+    border-radius: 20px;;
+}
+
+.subText{
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--softTextColor);
+}
+
+.deleteBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: 1px solid var(--danger);
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100px;
+    background-color: transparent;
+    color: var(--danger);
+    align-self: flex-end;
+}

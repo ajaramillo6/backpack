@@ -1,0 +1,86 @@
+.container{
+    width: 30%;
+    margin-top: 60px;
+    transition: all 1s ease;
+    background-color: var(--bg);
+}
+
+.containerHide{
+    width: 30%;
+    margin-top: 60px;
+    position: absolute;
+    right: -800px;
+    top: 0;
+    transition: all 1s ease;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.leftHeader{
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    font-size: 28px;
+}
+
+.cardsWrapper{
+    margin: 35px 5px 60px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.iconWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    opacity: 0;
+    color: var(--softTextColor);
+    transition: all 0.5s ease;
+}
+
+.container:hover .iconWrapper{
+    opacity: 100;
+}
+
+.showMoreBtn{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--softTextColor);
+    cursor: pointer;
+    padding: 5px;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+    .container, .containerHide{
+        flex: 4;
+        width: auto;
+        position: static;
+    }
+    .container:hover{
+        box-shadow: none;
+    }
+
+    .iconWrapper{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .container, .containerHide{
+        margin-top: 0px;
+    }
+}

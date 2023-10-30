@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import styles from "./authLinks.module.css";
-import Link from 'next/link';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AuthDropdown from '../authDropdown/AuthDropdown';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -22,12 +21,20 @@ const AuthLinks = ({ open }) => {
 
   return (<>
   {status === 'unauthenticated' ? (
-    <Link href="/login">
-      <div className={styles.btn}>
-        <PersonOutlineIcon style={{fontSize: "22px"}} />
-        Login
-      </div>
-    </Link>
+    <div className={styles.btn} onClick={()=>setOpenDropdown(!openDropdown)}
+          onMouseEnter={()=>setMouseInZone(true)}
+          onMouseLeave={()=>setMouseInZone(false)}
+          onBlur={handleBlur}
+          tabIndex="0">
+      <PersonOutlineIcon style={{fontSize: "22px"}} />
+      Login
+    {openDropdown && 
+      <AuthDropdown 
+        setOpen={setOpenDropdown} 
+        setMouseInZone={setMouseInZone}
+      />
+    }
+    </div>
   ):(
     <>
       <div className={!open ? styles.profile:styles.profileOut}>

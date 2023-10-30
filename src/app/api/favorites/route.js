@@ -10,6 +10,7 @@ export const GET = async (req) => {
 
   try {
     const favorites = await prisma.post.findMany({
+      take: 5,
       orderBy: [
         {
           likes: 'desc',

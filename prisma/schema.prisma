@@ -46,8 +46,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
-  Comment       Comment[]
-  Reply         Reply[]
 }
 
 model VerificationToken {
@@ -72,37 +70,11 @@ model Post {
   title String
   desc String
   country String?
-  state String?
-  img String?
+  img String
   views Int @default(0)
   likes Int @default(0)
   catSlug String
   cat Category @relation( fields: [catSlug], references: [slug])
   userEmail String
   user User @relation(fields: [userEmail], references: [email])
-  comments Comment[]
-}
-
-model Comment {
-  id String @id @default(cuid()) @map("_id")
-  createdAt DateTime @default(now())
-  slug String @unique
-  desc String
-  likes Int @default(0)
-  userEmail String
-  user User @relation(fields: [userEmail], references: [email])
-  postSlug String
-  post Post @relation(fields: [postSlug], references: [slug])
-  replies Reply[]
-}
-
-model Reply {
-  id String @id @default(cuid()) @map("_id")
-  createdAt DateTime @default(now())
-  desc String
-  likes Int @default(0)
-  userEmail String
-  user User @relation(fields: [userEmail], references: [email])
-  commentSlug String
-  comment Comment @relation(fields: [commentSlug], references: [slug])
 }
