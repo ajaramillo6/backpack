@@ -18,6 +18,9 @@
 }
 
 .progress{
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 12px;
     font-weight: 300;
     color: var(--softTextColor);
@@ -115,7 +118,7 @@
     overflow-y: auto;
 }
 
-.publish{
+.publish, .prohibit{
     position: absolute;
     top: 100px;
     right: 100px;
@@ -132,4 +135,10 @@
 .publish:hover{
     color: var(--mainColor);
     border: 1px solid var(--mainColor);
+}
+
+.prohibit:hover{
+    color: var(--softTextColor);
+    border: 1px solid var(--softTextColor);
+    cursor: not-allowed;
 }

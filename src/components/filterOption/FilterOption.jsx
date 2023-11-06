@@ -4,12 +4,21 @@ import React from 'react'
 import styles from "./filterOption.module.css";
 
 const FilterOption = ({posts, cat}) => {
-    const router = useRouter();
+
+  const uniqueTags = [];
+  posts.map(post => {
+    if (uniqueTags.indexOf(post.country) === -1) {
+        uniqueTags.push(post.country)
+    }
+  });
+
+  const router = useRouter();
+  
   return (
     <select className={styles.countryList} onChange={(e)=>router.push(`?cat=${cat || ""}&country=${e.target.value}`)}>
         <option value={""}>Select a country</option>
-        {posts.map((post)=>(
-            <option value={post.country}>{post.country}</option>
+        {uniqueTags.map((post)=>(
+            <option value={post.country}>{post}</option>
         )).sort()}
     </select>
   )

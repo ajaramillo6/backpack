@@ -13,6 +13,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { app } from '../utils/firebase';
 import { countryListAllIsoData } from '@/src/countries';
 import Image from 'next/image';
+import Spinner from '@/src/components/spinner/Spinner';
 
 const storage = getStorage(app);
 
@@ -61,8 +62,12 @@ const WritePage = () => {
     file && upload();
   },[file]);
 
-  if(status === "Loading"){
-    return <div className={styles.loading}>Loading...</div>
+  if(status === "loading"){
+    return (
+      <div className={styles.container}>
+        <Spinner />
+      </div>
+    )
   };
   if(status === "unauthenticated"){
     router.push("/");
@@ -105,12 +110,13 @@ const WritePage = () => {
           name="image"
           onChange={(e)=>setFile(e.target.files[0])}
         />
-        {(!file && progress !== 100) ?
+        {(progress < 100) ?
         <div className={styles.addButtonImg}>
+          {!file &&
           <label htmlFor="image" style={{cursor: "pointer"}}>
             <AddPhotoAlternateIcon style={{fontSize: "40px"}} />
-          </label>
-          {media && <span className={styles.progress}>{progress.toFixed(0) + "%"}</span>}
+          </label>}
+          {file && <div className={styles.progress}><Spinner /></div>}
         </div>
         :<div className={styles.imgContainer}>
           <Image className={styles.image} src={media} alt="" fill />
@@ -168,7 +174,15 @@ const WritePage = () => {
           placeholder="Tell your story..." 
         />
       </div>
-      <button className={styles.publish} onClick={handleSubmit}>Publish</button>
+      <button className={(
+        (title && title !== "") && (cat && cat !== "Select category")
+        ) ? styles.publish:styles.prohibit} 
+        onClick={
+          ((title && title !== "") 
+          && (cat && cat !== "Select category")) 
+          && handleSubmit}>
+            Publish
+      </button>
     </div>
   )
 }

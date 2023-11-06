@@ -8,6 +8,9 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { app } from '../../app/utils/firebase'
 import { countryListAllIsoData } from '@/src/countries';
 import ProgressBar from '../progressBar/ProgressBar';
+import { fetcher } from '@/src/getData';
+import useSWR from 'swr';
+import Spinner from '../spinner/Spinner';
 
 const storage = getStorage(app);
 
@@ -21,6 +24,11 @@ const Edit = ({ post, setShowEdit }) => {
     const [file, setFile] = useState(null);
     const [media, setMedia] = useState("");
     const [progress, setProgress] = useState(0);
+
+    const { isLoading, mutate } = useSWR(
+        `http://localhost:3000/api/posts/${post.slug}`,
+        fetcher
+    );
 
     const upload = () => {
       const uniqueName = new Date().getTime() + file.name;
@@ -61,11 +69,12 @@ const Edit = ({ post, setShowEdit }) => {
           title: title ? title:post.title,
           desc: post.desc,
           img: media ? media:post.img,
-          country: (country !== 'Select country') && country,
-          catSlug: (cat !== 'Select category *') && cat,
+          country: (country && country !== 'Select country') ? country:post.country,
+          catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
           slug: post.slug,
         }),
       });
+      mutate();
       if(res.status === 200){
         setShowEdit(false);
       }
@@ -83,6 +92,7 @@ const Edit = ({ post, setShowEdit }) => {
             if(!res.ok){
                 console.log("something went wrong")
             }
+            mutate();
             router.push("/");
         })
     }
@@ -146,8 +156,8 @@ const Edit = ({ post, setShowEdit }) => {
                 </div>
                 <div className={styles.right}>
                     <span className={styles.text}>Cover photo</span>
-                    {media && <ProgressBar progress={progress} />}
-                    {(!file && progress !== 100) ? (
+                    {file && <ProgressBar progress={progress} />}
+                    {(!file && progress < 100) ? (
                         <div className={styles.imgWrapper}>
                             <Image className={styles.img} src={post.img} alt="" fill />
                         </div>
@@ -174,7 +184,7 @@ const Edit = ({ post, setShowEdit }) => {
                 <button 
                     className={styles.saveBtn} 
                     onClick={handleSave}>
-                        Save
+                        {!isLoading ? "Save":<Spinner />}
                 </button>
                 <button 
                     className={styles.deleteBtn} 

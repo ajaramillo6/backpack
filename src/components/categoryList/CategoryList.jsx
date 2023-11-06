@@ -17,7 +17,7 @@ const CategoryList = () => {
         <div key={idx} className={styles.category}>
           <div className={styles.text}>{item}</div>
         </div>
-        )).splice(0,6)}
+        ))}
       </div>
     </div>
   )

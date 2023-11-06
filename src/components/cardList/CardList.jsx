@@ -1,36 +1,47 @@
+"use client"
 import React from 'react'
 import styles from "./cardList.module.css";
 import Pagination from '../pagination/Pagination';
 import Card from '../card/Card';
-import { getPosts } from "../../getData";
+import { fetcher } from "../../getData";
+import useSWR from 'swr';
+import Spinner from '../spinner/Spinner';
 
-const CardList = async({ page, cat, type, country }) => {
+const CardList = ({ page, cat, type, country }) => {
 
-  const { posts, count } = await getPosts(page, cat, country);
+  const { data, isLoading } = useSWR(
+    `http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`,
+    fetcher
+  );
 
   const POST_PER_PAGE = 5;
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 
-  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
+  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < data?.count;
 
   return (
     <div className={styles.container}>
-      {posts?.length > 0 &&
       <div className={styles.header}>
         <h1 className={styles.title}>Recently Added</h1>
-      </div>}
-      {posts?.length > 0 ?
-      <div className={styles.posts}>
-        {posts?.map((post)=>(
-          <div key={post._id}>
-            <Card post={post} imgSize="lg" type={type} />
-          </div>
-        ))}
       </div>
-      :<div>
-          No posts available!
-      </div>}
+      {isLoading
+      ? <div className={styles.posts}>
+          <Spinner />
+        </div>
+      :<>
+        {data?.posts?.length > 0 ?
+        <div className={styles.posts}>
+          {data?.posts?.map((post)=>(
+            <div key={post._id}>
+              <Card post={post} imgSize="lg" type={type} />
+            </div>
+          ))}
+        </div>
+        :<div>
+            No posts available!
+        </div>}
+      </>}
       <Pagination 
         page={page} 
         havePrev={havePrev} 

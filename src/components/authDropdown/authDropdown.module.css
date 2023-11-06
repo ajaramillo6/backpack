@@ -40,6 +40,48 @@
     gap: 5px;
 }
 
+.containerLoading{
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 15px;
+    z-index: 999;
+    width: max-content;
+    gap: 20px;
+    overflow: hidden;
+    background-color: var(--softBg);
+}
+
+.containerError{
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 15px;
+    z-index: 999;
+    width: max-content;
+    gap: 20px;
+    overflow: hidden;
+    background-color: var(--softBg);
+}
+
+.errorWrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.errorText{
+    font-size: 14px;
+    color: var(--danger);
+}
+
 @media screen and (max-width: 650px){
     .link:nth-child(3){
         display: none;

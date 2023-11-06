@@ -8,13 +8,13 @@ const SinglePage = async ({ params }) => {
 
     const { slug } = params;
 
-    const data = await getSinglePost(slug);
+    const post = await getSinglePost(slug);
 
-    const recommended  = await getPopular(data?.catSlug);
+    const recommended  = await getPopular(post?.catSlug);
 
   return (
     <div className={styles.container}>
-        <SinglePageContent data={data} recommended={recommended} />
+        <SinglePageContent post={post} recommended={recommended} />
     </div>
   )
 }

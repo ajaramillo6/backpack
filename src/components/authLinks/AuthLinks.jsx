@@ -21,19 +21,17 @@ const AuthLinks = ({ open }) => {
 
   return (<>
   {status === 'unauthenticated' ? (
-    <div className={styles.btn} onClick={()=>setOpenDropdown(!openDropdown)}
-          onMouseEnter={()=>setMouseInZone(true)}
-          onMouseLeave={()=>setMouseInZone(false)}
-          onBlur={handleBlur}
-          tabIndex="0">
-      <PersonOutlineIcon style={{fontSize: "22px"}} />
-      Login
-    {openDropdown && 
-      <AuthDropdown 
-        setOpen={setOpenDropdown} 
-        setMouseInZone={setMouseInZone}
-      />
-    }
+    <div className={styles.btnContainer}>
+      <div className={styles.btn} onClick={()=>setOpenDropdown(!openDropdown)}>
+        <PersonOutlineIcon style={{fontSize: "22px"}} />
+        Login
+      </div>
+      {openDropdown && 
+        <AuthDropdown 
+          setOpen={setOpenDropdown} 
+          setMouseInZone={setMouseInZone}
+        />
+      }
     </div>
   ):(
     <>

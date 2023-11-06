@@ -44,7 +44,7 @@ const Card = ({ post, type, imgSize }) => {
             />}
             <div className={styles.details}>
                 <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(post.createdAt))}</span>
-                <span className={styles.likes}>{numberFormat(post.likes)} likes</span>
+                <span className={styles.likes}>{`${numberFormat(post.likes.length)} ${(post.likes.length > 1 || post.likes.length === 0) ? 'likes':'like'}`}</span>
             </div>
             {imgSize === 'lg' && <Link className={styles.linkRead} href={`/posts/${post.slug}`}>Read More</Link>}
         </div>

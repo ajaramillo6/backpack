@@ -72,7 +72,7 @@ model Post {
   country String?
   img String
   views Int @default(0)
-  likes Int @default(0)
+  likes String[]
   catSlug String
   cat Category @relation( fields: [catSlug], references: [slug])
   userEmail String

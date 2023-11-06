@@ -12,16 +12,27 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GoogleIcon from '@mui/icons-material/Google';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Spinner from '../spinner/Spinner';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const AuthDropdown = ({ setOpen, setMouseInZone }) => {
 
   const { status } = useSession();
 
-  if(status === "Loading"){
-    return <Spinner />
-  }
-
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSignIn = async() => {
+    try{
+      setLoading(true);
+      setError(false);
+      await signIn("google");
+    }catch(err){
+      setLoading(false);
+      setError(true);
+      console.log(err);
+    }
+  }
 
   const handleScroll = (direction) => {
     if(direction === "l") {
@@ -30,7 +41,34 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
     if(direction === "r") {
         setIndex(index === 0 ? 1 : 0)
     }
-}
+  }
+
+  if(loading){
+    return (
+      <div className={styles.containerLoading}>
+        <div className={styles.link}>
+          <GoogleIcon style={{fontSize: "18px"}} />
+          <span>Log in with Google</span>
+        </div>
+        <Spinner />
+      </div>
+    )
+  }
+
+  if(error){
+    return (
+      <div className={styles.containerError}>
+        <div className={styles.link}>
+          <GoogleIcon style={{fontSize: "18px"}} />
+          <span>Log in with Google</span>
+        </div>
+        <span className={styles.errorWrapper}>
+          <ErrorOutlineIcon />
+          <p className={styles.errorText}>Something went wrong!</p>
+        </span>
+      </div>
+    )
+  }
 
   return (
   <>
@@ -68,13 +106,8 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
         </div>
       </div>
     </div>
-    :<div 
-      className={styles.container}
-      onMouseEnter={()=>setMouseInZone(true)}
-      onMouseLeave={()=>setMouseInZone(false)}
-      onBlur={()=>setOpen(false)}
-      tabIndex="0">
-      <div className={styles.link} onClick={()=>signIn("google")}>
+    :<div className={styles.container}>
+      <div className={styles.link} onClick={handleSignIn}>
         <GoogleIcon style={{fontSize: "18px"}} />
         <span>Log in with Google</span>
       </div>
