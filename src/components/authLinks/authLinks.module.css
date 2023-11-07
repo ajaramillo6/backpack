@@ -2,9 +2,14 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
     position: relative;
     width: max-content;
+}
+
+.profileNameWrapper{
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .profileName{

@@ -22,7 +22,9 @@ const Card = ({ post, type, imgSize }) => {
         </div>)}
         <div className={imgSize === 'lg' ? styles.textContainer : styles.textContainerSm}>
             <div>
-                <span className={imgSize === 'lg' ? styles.username : styles.usernameSm}>{post.user?.name}</span>
+                <Link className={styles.link} href={`/profile?user=${post?.user?.name}`} passHref>
+                    <span className={imgSize === 'lg' ? styles.username : styles.usernameSm}>{post.user?.name}</span>
+                </Link>
                 {((type !== 'recommendations') && (type !== 'blog')) && <>
                 <span> - </span>
                 <Link href={`/blog?cat=${post.catSlug}`}>
