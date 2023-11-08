@@ -30,6 +30,7 @@ const WritePage = () => {
   const [cat, setCat] = useState("");
   const [country, setCountry] = useState("");
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const upload = () => {
     const uniqueName = new Date().getTime() + file.name;
@@ -82,6 +83,7 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
+    setLoading(true);
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
@@ -95,6 +97,7 @@ const WritePage = () => {
     });
     if(res.status === 200){
       const data = await res.json();
+      setLoading(false);
       router.push(`/posts/${data.slug}`);
     }
   };
@@ -181,7 +184,7 @@ const WritePage = () => {
           ((title && title !== "") 
           && (cat && cat !== "Select category")) 
           && handleSubmit}>
-            Publish
+            {loading ? <Spinner />:"Publish"}
       </button>
     </div>
   )

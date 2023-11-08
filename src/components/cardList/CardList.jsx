@@ -14,7 +14,7 @@ const CardList = ({ page, cat, type, country }) => {
     fetcher
   );
 
-  const POST_PER_PAGE = 5;
+  const POST_PER_PAGE = 4;
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 

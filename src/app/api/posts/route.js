@@ -65,7 +65,7 @@ export const POST = async (req) => {
     try {
       const body = await req.json();
       const post = await prisma.post.create({
-        data: { ...body, userEmail: session.user.email },
+        data: { ...body, userName: session.user.name },
       });
   
       return new NextResponse(JSON.stringify(post, { status: 200 }));
@@ -90,12 +90,12 @@ export const DELETE = async (req) => {
   const body = await req.json();
 
   try {
-    if(session.user.email === body.userEmail){
+    if(session.user.name === body.userName){
       await prisma.post.delete({
         where: { 
           id: body.id,
           slug: body.slug,
-          userEmail: body.userEmail,
+          userUserName: body.userName,
         },
       });
     } else {
@@ -130,7 +130,7 @@ export const PUT = async (req) => {
       where: {
         slug: body.slug,
       },
-      data: { ...body, userEmail: session.user.email },
+      data: { ...body, userName: session.user.name },
     });
     return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
   } catch (err) {

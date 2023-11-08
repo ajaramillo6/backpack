@@ -15,6 +15,7 @@ import useSWR from 'swr';
 import { fetcher } from '@/src/getData';
 import Spinner from '../spinner/Spinner';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const SinglePageContent = ({ post, recommended }) => {
 
@@ -39,9 +40,9 @@ const SinglePageContent = ({ post, recommended }) => {
     const handleLike = async() => {
         if(data){
             let updatedLikes = [...data.likes];
-            let index = updatedLikes.findIndex((email) => email === currentUser?.email);
-            (!updatedLikes.includes(currentUser?.email)) 
-                ? (updatedLikes.push(currentUser?.email))
+            let index = updatedLikes.findIndex((name) => name === currentUser?.name);
+            (!updatedLikes.includes(currentUser?.name)) 
+                ? (updatedLikes.push(currentUser?.name))
                 : (updatedLikes.splice(index,1));
             const res = await fetch(`/api/posts/${post.slug}`, {
                 method: "PUT",
@@ -61,8 +62,8 @@ const SinglePageContent = ({ post, recommended }) => {
 
     //Like Track
     useEffect(()=>{
-        setIsLiked(data?.likes?.includes(currentUser?.email));
-    },[currentUser?.email, data?.likes])
+        setIsLiked(data?.likes?.includes(currentUser?.name));
+    },[currentUser?.name, data?.likes])
 
   return (
     <>
@@ -104,7 +105,9 @@ const SinglePageContent = ({ post, recommended }) => {
                         </div>
                         {showEdit && <Edit post={data} setShowEdit={setShowEdit}/>}
                     </div>
-                    <div className={styles.category}>{data?.catSlug}</div>
+                    <Link href={`/blog?cat=${data?.catSlug}`}>
+                        <div className={styles.category}>{data?.catSlug}</div>
+                    </Link>
                 </div>
             </div>
         </div>

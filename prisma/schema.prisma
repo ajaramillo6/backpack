@@ -39,8 +39,8 @@ model Session {
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
-  name          String   
-  email         String    @unique
+  name          String    @unique
+  email         String    
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -75,6 +75,6 @@ model Post {
   likes String[]
   catSlug String
   cat Category @relation( fields: [catSlug], references: [slug])
-  userEmail String
-  user User @relation(fields: [userEmail], references: [email])
+  userName String
+  user User @relation(fields: [userName], references: [name])
 }

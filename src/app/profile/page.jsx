@@ -6,6 +6,7 @@ import { fetcher } from '@/src/getData';
 import Card from '@/src/components/card/Card';
 import Spinner from '@/src/components/spinner/Spinner';
 import Image from 'next/image';
+import Pagination from '@/src/components/pagination/Pagination';
 
 const ProfilePage = ({ searchParams}) => {
 
@@ -15,11 +16,15 @@ const ProfilePage = ({ searchParams}) => {
   const userName = searchParams.user;
 
   const { data, isLoading } = useSWR(
-    `http://localhost:3000/api/profile?page=${page}&cat=${cat || ""}&country=${country || ""}`,
+    `http://localhost:3000/api/profile?user=${userName}&page=${page}&cat=${cat || ""}&country=${country || ""}`,
     fetcher
   );
 
-  console.log(data)
+  const POST_PER_PAGE = 4;
+
+  const havePrev = POST_PER_PAGE * (page - 1) > 0;
+
+  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < data?.count;
 
   return (
     <div className={styles.container}>
@@ -36,11 +41,18 @@ const ProfilePage = ({ searchParams}) => {
       {isLoading
         ? <div className={styles.wrapper}><Spinner /></div>
         : <div className={styles.wrapper}>
-          {data?.posts?.filter((post)=>post.user.name === userName).map((post)=>(
+          {data?.posts?.map((post)=>(
             <Card post={post} imgSize="lg" />
           ))}
         </div>
       }
+      <Pagination 
+        page={page} 
+        havePrev={havePrev} 
+        haveNext={haveNext} 
+        type="profile"
+        user={userName}
+      />
     </div>
   )
 }
