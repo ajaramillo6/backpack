@@ -73,6 +73,7 @@ model Post {
   img String
   views Int @default(0)
   likes String[]
+  following String[]
   catSlug String
   cat Category @relation( fields: [catSlug], references: [slug])
   userName String

@@ -20,8 +20,19 @@
 
 .image{
     border-radius: 50%;
+    background-color: gray;
 }
 
 .wrapper{
     margin-top: 60px;
+}
+
+@media screen and (max-width: 768px) {
+    .title{
+        font-size: 35px;
+    }
+
+    .imgWrapper{
+        display: none;
+    }
 }

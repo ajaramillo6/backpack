@@ -1,0 +1,66 @@
+.container{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--transparentBg);
+    z-index: 99999;
+}
+
+.subContainer{
+    width: 400px;
+    background-color: var(--softBg);
+    color: var(--textColor);
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.message{
+    color: var(--softTextColor);
+    font-size: 14px;
+    text-align: center;
+}
+
+.link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--textColor);
+    color: var(--textColor);
+    padding: 10px;
+    border-radius: 10px;
+    width: 190px;
+    cursor: pointer;
+}
+
+.link:hover{
+    border: 1px solid var(--mainColor);
+    color: var(--mainColor);
+}
+
+.errorWrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.errorText{
+    font-size: 14px;
+    color: var(--danger);
+}
+
+@media screen and (max-width: 768px) {
+    .subContainer{
+        width: 80%;
+    }
+}

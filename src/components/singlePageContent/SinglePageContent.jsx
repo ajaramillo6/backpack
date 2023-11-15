@@ -6,6 +6,7 @@ import Image from 'next/image';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { numberFormat, timeSince } from '@/src/components/Format';
 import Recommended from '../recommended/Recommended';
@@ -35,7 +36,21 @@ const SinglePageContent = ({ post, recommended }) => {
     const [hideMenu, setHideMenu] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [isFollowing, setIsFollowing] = useState(false);
     const [like, setLike] = useState(data?.likes?.length);
+
+    //Like
+    useEffect(()=>{
+        setIsLiked(data?.likes?.includes(currentUser?.name));
+    },[currentUser?.name, data?.likes])
+
+    //Follow
+    useEffect(()=>{
+        setIsFollowing(data?.following?.includes(currentUser?.name));
+    },[currentUser?.name, data?.following])
+
+    const LikeIcon = (isLiked) ? FavoriteIcon : FavoriteBorderIcon;
+    const FollowIcon = (isFollowing) ? CheckCircleOutlineIcon : AddCircleOutlineIcon;
 
     const handleLike = async() => {
         if(data){
@@ -47,7 +62,7 @@ const SinglePageContent = ({ post, recommended }) => {
             const res = await fetch(`/api/posts/${post.slug}`, {
                 method: "PUT",
                 body: JSON.stringify(
-                updatedLikes
+                    updatedLikes
                 ),
             });
             if(res.status === 200){
@@ -58,12 +73,26 @@ const SinglePageContent = ({ post, recommended }) => {
         }
     }
 
-    const LikeIcon = (isLiked) ? FavoriteIcon : FavoriteBorderIcon;
-
-    //Like Track
-    useEffect(()=>{
-        setIsLiked(data?.likes?.includes(currentUser?.name));
-    },[currentUser?.name, data?.likes])
+    const handleFollow = async() => {
+        if(data){
+            let updatedFollows = [...data.following];
+            let index = updatedFollows.findIndex((name) => name === currentUser?.name);
+            (!updatedFollows.includes(currentUser?.name)) 
+                ? (updatedFollows.push(currentUser?.name))
+                : (updatedFollows.splice(index,1));
+            const res = await fetch(`/api/following`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    slug: post.slug,
+                    array: updatedFollows,
+                }),
+            });
+            if(res.status === 200){
+                setIsFollowing(!isFollowing);
+                mutate();
+            }
+        }
+    }
 
   return (
     <>
@@ -91,15 +120,17 @@ const SinglePageContent = ({ post, recommended }) => {
                     <div className={styles.iconsContainer}>
                         <div className={styles.likeWrapper}>
                             <div 
-                                className={(isLiked) ? styles.iconLiked:styles.icon} 
+                                className={(isLiked) ? styles.iconOn:styles.icon} 
                                 onClick={handleLike}>
                                 <LikeIcon />
                             </div>
                             {data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(data?.likes?.length)}</div>}
                         </div>
-                        <div className={styles.icon}>
-                            <AddCircleOutlineIcon />
-                        </div>
+                        <div 
+                                className={(isFollowing) ? styles.iconOn:styles.icon} 
+                                onClick={handleFollow}>
+                                <FollowIcon />
+                            </div>
                         <div className={styles.icon} onClick={()=>setShowEdit(true)}>
                             <EditIcon />
                         </div>

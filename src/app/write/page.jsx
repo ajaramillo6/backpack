@@ -97,7 +97,6 @@ const WritePage = () => {
     });
     if(res.status === 200){
       const data = await res.json();
-      setLoading(false);
       router.push(`/posts/${data.slug}`);
     }
   };
@@ -179,12 +178,18 @@ const WritePage = () => {
       </div>
       <button className={(
         (title && title !== "") && (cat && cat !== "Select category")
-        ) ? styles.publish:styles.prohibit} 
+        ) ? (loading ? styles.loading:styles.publish):styles.prohibit} 
         onClick={
           ((title && title !== "") 
           && (cat && cat !== "Select category")) 
           && handleSubmit}>
-            {loading ? <Spinner />:"Publish"}
+            {loading 
+              ? <div className={styles.loadingText}>
+                  <Spinner />
+                  <span>Publishing...</span>
+                </div>
+              :"Publish"
+            }
       </button>
     </div>
   )

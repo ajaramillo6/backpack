@@ -21,6 +21,7 @@
     border: 1px solid var(--softTextColor);
     border-radius: 30px;
     color: var(--textColor);
+    position: relative;
 }
 
 .input{
@@ -40,9 +41,17 @@
     color: var(--mainColor);
 }
 
+.logoLogout{
+    flex: 2;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--mainColor);
+}
+
 .links, .linksOut{
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 20px;
     flex: 1;
     font-size: 16px;

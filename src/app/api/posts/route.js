@@ -95,7 +95,7 @@ export const DELETE = async (req) => {
         where: { 
           id: body.id,
           slug: body.slug,
-          userUserName: body.userName,
+          userName: body.userName,
         },
       });
     } else {

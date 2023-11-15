@@ -74,7 +74,7 @@
     justify-content: center;
 }
 
-.iconLiked{
+.iconOn{
     cursor: pointer;
     color: var(--mainColor);
     display: flex;

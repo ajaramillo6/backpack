@@ -1,15 +1,26 @@
+"use client"
+
 import React from 'react'
 import styles from './countryFilter.module.css';
-import { getPopular } from '@/src/getData';
+import { fetcher } from '@/src/getData';
+import useSWR from 'swr';
 import FilterOption from '../filterOption/FilterOption';
 
-const CountryFilter = async({cat}) => {
+const CountryFilter = ({cat}) => {
 
-  const posts = await getPopular(cat);
+  const getData = () => {
+    const { data, isLoading } = useSWR(
+      `http://localhost:3000/api/popular?cat=${cat || ""}`,
+      fetcher
+    );
+    return { data, isLoading }
+  }
+
+  const posts = getData();
 
   return (
     <div className={styles.container}>
-      <FilterOption posts={posts} cat={cat} />
+      <FilterOption posts={posts?.data} cat={cat} />
     </div>
   )
 }

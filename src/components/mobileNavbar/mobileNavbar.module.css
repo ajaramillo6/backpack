@@ -2,6 +2,10 @@
     display: none;
 }
 
+.containerLoggedOut{
+    display: none;
+}
+
 .wrapper{
     display: flex;
     align-items: center;

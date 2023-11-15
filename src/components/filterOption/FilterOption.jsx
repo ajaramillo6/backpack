@@ -6,7 +6,7 @@ import styles from "./filterOption.module.css";
 const FilterOption = ({posts, cat}) => {
 
   const uniqueTags = [];
-  posts.map(post => {
+  posts?.map(post => {
     if (uniqueTags.indexOf(post.country) === -1) {
         uniqueTags.push(post.country)
     }

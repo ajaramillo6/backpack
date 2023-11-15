@@ -13,10 +13,13 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Spinner from '../spinner/Spinner';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { useRouter } from 'next/navigation';
 
 const AuthDropdown = ({ setOpen, setMouseInZone }) => {
 
   const { status } = useSession();
+
+  const router = useRouter();
 
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -30,6 +33,14 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
     }catch(err){
       setLoading(false);
       setError(true);
+      console.log(err);
+    }
+  }
+
+  const handleSignOut = async() => {
+    try{
+      await signOut();
+    }catch(err){
       console.log(err);
     }
   }
@@ -95,7 +106,7 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
         </div>
         <div className={styles.link} onClick={()=>setOpen(false)}>
             <LogoutIcon style={{fontSize:"18px"}} />
-            <span onClick={signOut}>Logout</span>
+            <span onClick={handleSignOut}>Logout</span>
         </div>
       </div>
       <div className={styles.rightContainer} style={{transform:`translateX(${-210*index}px)`}}>

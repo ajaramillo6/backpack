@@ -11,6 +11,7 @@ import ProgressBar from '../progressBar/ProgressBar';
 import { fetcher } from '@/src/getData';
 import useSWR from 'swr';
 import Spinner from '../spinner/Spinner';
+import Confirm from '../confirm/Confirm';
 
 const storage = getStorage(app);
 
@@ -24,6 +25,7 @@ const Edit = ({ post, setShowEdit }) => {
     const [file, setFile] = useState(null);
     const [media, setMedia] = useState("");
     const [progress, setProgress] = useState(0);
+    const [confirm, setConfirm] = useState(false);
 
     const { isLoading, mutate } = useSWR(
         `http://localhost:3000/api/posts/${post.slug}`,
@@ -79,23 +81,6 @@ const Edit = ({ post, setShowEdit }) => {
         setShowEdit(false);
       }
     };
-
-    const handleDelete = async () => {
-        await fetch(`/api/posts`, {
-            method: "DELETE",
-            body: JSON.stringify({ 
-                id: post.id,
-                slug: post.slug,
-                userEmail: post.userEmail,
-            })
-        }).then((res)=>{
-            if(!res.ok){
-                console.log("something went wrong")
-            }
-            mutate();
-            router.push("/");
-        })
-    }
 
   return (
     <div className={styles.container}>
@@ -188,10 +173,17 @@ const Edit = ({ post, setShowEdit }) => {
                 </button>
                 <button 
                     className={styles.deleteBtn} 
-                    onClick={handleDelete}>
+                    onClick={()=>setConfirm(true)}>
                         Delete
                 </button>
             </div>
+            {confirm &&
+            <Confirm 
+                post={post} 
+                setConfirm={setConfirm}
+                message="Are you absolutely sure?"
+                subText="This action will permanently delete your post." 
+            />}
         </div>
     </div>
   )

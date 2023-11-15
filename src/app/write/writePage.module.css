@@ -118,18 +118,23 @@
     overflow-y: auto;
 }
 
-.publish, .prohibit{
+.publish, .prohibit, .loading{
     position: absolute;
     top: 100px;
     right: 100px;
     padding: 10px 20px;
-    border: none;
     background-color: transparent;
     color: var(--textColor);
     border: 1px solid var(--textColor);
     border-radius: 50px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.loadingText{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .publish:hover{
