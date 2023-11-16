@@ -1,24 +1,31 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import styles from "./edit.module.css";
-import { useRouter } from 'next/navigation';
-import CloseIcon from '@mui/icons-material/Close';
-import Image from 'next/image';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { app } from '../../app/utils/firebase'
 import { countryListAllIsoData } from '@/src/countries';
-import ProgressBar from '../progressBar/ProgressBar';
+
+//Tools
+import Image from 'next/image';
+
+//Firebase tools
+import { app } from '../../app/utils/firebase';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+//Access data
 import { fetcher } from '@/src/getData';
 import useSWR from 'swr';
+
+//Components
 import Spinner from '../spinner/Spinner';
 import Confirm from '../confirm/Confirm';
+import CloseIcon from '@mui/icons-material/Close';
+import ProgressBar from '../progressBar/ProgressBar';
+
 
 const storage = getStorage(app);
 
 const Edit = ({ post, setShowEdit }) => {
 
-    const router = useRouter();
-
+    //Use states
     const [title, setTitle] = useState("");
     const [country, setCountry] = useState("");
     const [cat, setCat] = useState(null);
@@ -27,16 +34,21 @@ const Edit = ({ post, setShowEdit }) => {
     const [progress, setProgress] = useState(0);
     const [confirm, setConfirm] = useState(false);
 
+    //Fetch data
     const { isLoading, mutate } = useSWR(
         `http://localhost:3000/api/posts/${post.slug}`,
         fetcher
     );
 
+    //Use effect
+    // useEffect(()=>{
+    //   file && upload();
+    // },[file]);
+
+    //Handle functions
     const upload = () => {
       const uniqueName = new Date().getTime() + file.name;
-  
       const storageRef = ref(storage, uniqueName);
-  
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on('state_changed', 
@@ -60,26 +72,29 @@ const Edit = ({ post, setShowEdit }) => {
       );
     }
   
-    useEffect(()=>{
-      file && upload();
-    },[file]);
-  
     const handleSave = async () => {
-      const res = await fetch("/api/posts", {
-        method: "PUT",
-        body: JSON.stringify({
-          title: title ? title:post.title,
-          desc: post.desc,
-          img: media ? media:post.img,
-          country: (country && country !== 'Select country') ? country:post.country,
-          catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
-          slug: post.slug,
-        }),
-      });
-      mutate();
-      if(res.status === 200){
-        setShowEdit(false);
+      //If replacing photo, then delete old before entering new
+      if(post.img !== ""){
+        console.log("post contains image")
+      } else{
+        console.log("post does not contain image")
       }
+      // //Post new edit
+      // const res = await fetch("/api/posts", {
+      //   method: "PUT",
+      //   body: JSON.stringify({
+      //     title: title ? title:post.title,
+      //     desc: post.desc,
+      //     img: media ? media:post.img,
+      //     country: (country && country !== 'Select country') ? country:post.country,
+      //     catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
+      //     slug: post.slug,
+      //   }),
+      // });
+      // mutate();
+      // if(res.status === 200){
+      //   setShowEdit(false);
+      // }
     };
 
   return (

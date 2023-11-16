@@ -1,7 +1,10 @@
-"use client"
-import { useRouter } from 'next/navigation'
+"use client";
+
 import React from 'react'
 import styles from "./filterOption.module.css";
+
+//Tools
+import { useRouter } from 'next/navigation'
 
 const FilterOption = ({posts, cat}) => {
 

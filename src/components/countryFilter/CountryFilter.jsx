@@ -1,13 +1,18 @@
-"use client"
+"use client";
 
 import React from 'react'
 import styles from './countryFilter.module.css';
+
+//Components
+import FilterOption from '../filterOption/FilterOption';
+
+//Access data
 import { fetcher } from '@/src/getData';
 import useSWR from 'swr';
-import FilterOption from '../filterOption/FilterOption';
 
 const CountryFilter = ({cat}) => {
 
+  //Data fetching
   const getData = () => {
     const { data, isLoading } = useSWR(
       `http://localhost:3000/api/popular?cat=${cat || ""}`,
@@ -16,6 +21,7 @@ const CountryFilter = ({cat}) => {
     return { data, isLoading }
   }
 
+  //Call data fetch function
   const posts = getData();
 
   return (

@@ -1,13 +1,19 @@
 "use client";
+
 import React from 'react'
 import styles from "./menu.module.css";
-import Card from '../card/Card';
+
+//Access data
 import useSWR from 'swr';
 import { fetcher } from '@/src/getData';
+
+//Components
 import Spinner from '../spinner/Spinner';
+import Card from '../card/Card';
 
 const Menu = ({ type, cat, country }) => {
 
+  //Data fetching
   const getData = (list) => {
     const { data, isLoading } = useSWR(
       `http://localhost:3000/api/${list}?cat=${cat || ""}&country=${country || ""}`,
@@ -16,6 +22,7 @@ const Menu = ({ type, cat, country }) => {
     return { data, isLoading }
   }
 
+  //Call data fetching function
   const favorites = getData("favorites")
   const popular = getData("popular")
 

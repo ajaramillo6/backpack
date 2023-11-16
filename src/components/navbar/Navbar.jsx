@@ -1,21 +1,30 @@
-"use client"
+"use client";
 
 import React, { useState } from 'react'
 import styles from "./navbar.module.css";
+
+//Tools
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+
+//Components
 import AuthLinks from '../authLinks/AuthLinks';
+import Suggestions from '../suggestions/Suggestions';
+
+//MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
-import Suggestions from '../suggestions/Suggestions';
-import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
 
+  //Find session
   const { data, status } = useSession();
 
+  //Use states
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
 
+  //Handler function
   const handleOpenSearch = () => {
     setOpen(!open);
     setQ("");
@@ -25,9 +34,9 @@ const Navbar = () => {
     <div className={styles.container}>
       {status === 'authenticated' && 
       <div className={!open ? styles.lookup : styles.lookupOn}>
-        {!open
-        ? <SearchIcon style={{cursor:"pointer"}} onClick={handleOpenSearch} />
-        : <div className={styles.searchInputWrapper}>
+        {!open ? (
+          <SearchIcon style={{cursor:"pointer"}} onClick={handleOpenSearch} />
+        ):(<div className={styles.searchInputWrapper}>
             <input 
               className={styles.input} 
               placeholder='Search'
@@ -36,7 +45,7 @@ const Navbar = () => {
             <CloseIcon style={{cursor:"pointer"}} onClick={handleOpenSearch} />
             {q.length > 2 && <Suggestions q={q.toLowerCase()} setQ={setQ} />}
           </div>
-        }
+        )}
       </div>}
       <div className={!open ? (status === 'authenticated' ? styles.logo:styles.logoLogout):styles.logoOut}>
         <Link className={styles.linkLogo} href='/'>

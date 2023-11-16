@@ -1,9 +1,13 @@
 import React from 'react'
 import styles from "./footer.module.css";
+
+//Tools
+import Link from 'next/link';
+
+//MUI Icons
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import Link from 'next/link';
 
 const Footer = () => {
   return (

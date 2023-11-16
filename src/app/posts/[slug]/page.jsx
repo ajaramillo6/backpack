@@ -1,18 +1,27 @@
-"use client"
+"use client";
+
 import React from 'react'
 import styles from "./singlePage.module.css";
-import { getPopular, getSinglePost } from '@/src/getData';
+
+//Components
 import SinglePageContent from '@/src/components/singlePageContent/singlePageContent';
 import Spinner from '@/src/components/spinner/Spinner';
+
+//Access data
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-const SinglePage = async ({ params }) => {
+const SinglePage = ({ params }) => {
 
+  //Find authentication status
   const { status } = useSession();
+
+  //Params
+  const { slug } = params;
 
   const router = useRouter();
 
+  //Handle loading and unauthentication access
   if(status === "loading"){
     return (
       <div className={styles.container}>
@@ -24,15 +33,9 @@ const SinglePage = async ({ params }) => {
     router.push("/?user=undefined");
   };
 
-  const { slug } = params;
-
-  const post = await getSinglePost(slug);
-
-  const recommended  = await getPopular(post?.catSlug);
-
   return (
     <div className={styles.container}>
-        <SinglePageContent post={post} recommended={recommended} />
+        <SinglePageContent slug={slug} />
     </div>
   )
 }

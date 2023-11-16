@@ -1,27 +1,36 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
+
+import React, { useState } from 'react';
 import styles from './noUser.module.css';
+
+//Components
+import Spinner from '../spinner/Spinner';
+
+//Tools
+import { signIn } from 'next-auth/react';
+
+//MUI Icons
 import GoogleIcon from '@mui/icons-material/Google';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import Spinner from '../spinner/Spinner';
-import { signIn } from 'next-auth/react';
 
 const NoUser = () => {
 
+    //Use state
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    //Handle function
     const handleSignIn = async() => {
-        try{
-          setLoading(true);
-          setError(false);
-          await signIn("google");
-        }catch(err){
-          setLoading(false);
-          setError(true);
-          console.log(err);
-        }
+      try{
+        setLoading(true);
+        setError(false);
+        await signIn("google");
+      }catch(err){
+        setLoading(false);
+        setError(true);
+        console.log(err);
       }
+    }
 
   return (
     <div className={styles.container}>

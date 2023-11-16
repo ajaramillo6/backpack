@@ -1,8 +1,12 @@
-"use client"
+"use client";
 
 import React from 'react'
 import styles from "./pagination.module.css";
+
+//Tools
 import { useRouter } from 'next/navigation';
+
+//MUI Icons
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const Pagination = ({ page, havePrev, haveNext, type, user }) => {

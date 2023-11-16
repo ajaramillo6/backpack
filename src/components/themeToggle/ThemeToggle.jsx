@@ -1,8 +1,12 @@
-"use client"
+"use client";
 
 import React, { useContext } from 'react'
 import styles from "./themeToggle.module.css";
+
+//Context
 import { ThemeContext } from '@/src/context/ThemeContext';
+
+//MUI Icons
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 

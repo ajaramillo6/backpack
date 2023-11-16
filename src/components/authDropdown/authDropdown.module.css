@@ -3,13 +3,13 @@
     top: 40px;
     right: 0px;
     display: flex;
+    background-color: var(--softBg);
+    overflow: hidden;
+    gap: 20px;
+    width: 220px;
     padding: 15px;
     border-radius: 15px;
     z-index: 999;
-    width: 220px;
-    gap: 20px;
-    overflow: hidden;
-    background-color: var(--softBg);
 }
 
 .leftContainer, .rightContainer{

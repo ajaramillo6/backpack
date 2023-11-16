@@ -1,8 +1,10 @@
 import React from 'react'
 import styles from "./searchCard.module.css";
+import { numberFormat, timeSince } from '../Format';
+
+//Tools
 import Link from 'next/link';
 import Image from 'next/image';
-import { numberFormat, timeSince } from '../Format';
 
 const SearchCard = ({ post, setQ }) => {
   return (

@@ -2,15 +2,21 @@
 
 import React, { useState } from 'react'
 import styles from "./recommended.module.css";
+
+//Components
 import Card from '../card/Card';
+
+//MUI Icons
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const Recommended = ({ currPost, recommended, hideMenu, setHideMenu }) => {
 
+    //Use state
     const [showMore, setShowMore] = useState(false);
 
+    //Handle function
     const handleShowMore = () => {
         setShowMore(!showMore);
     }
@@ -28,11 +34,11 @@ const Recommended = ({ currPost, recommended, hideMenu, setHideMenu }) => {
         <div className={styles.cardsWrapper}>
             {showMore ?
             <>
-            {recommended?.filter((post)=>post.catSlug === currPost.catSlug && (post.id !== currPost.id)).map((post)=>(
+            {recommended?.filter((post)=>post?.catSlug === currPost?.catSlug && (post.id !== currPost?.id)).map((post)=>(
                 <Card post={post} type="recommendations" key={post._id} />
             ))}
             </>:<>
-            {recommended?.filter((post)=>post.catSlug === currPost.catSlug && (post.id !== currPost.id)).map((post)=>(
+            {recommended?.filter((post)=>post?.catSlug === currPost?.catSlug && (post.id !== currPost?.id)).map((post)=>(
                 <Card post={post} type="recommendations" key={post._id} />
             )).slice(0,5)}
             </>}

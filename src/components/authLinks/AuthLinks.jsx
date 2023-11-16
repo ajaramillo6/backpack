@@ -2,20 +2,27 @@
 
 import React, { useState } from 'react'
 import styles from "./authLinks.module.css";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AuthDropdown from '../authDropdown/AuthDropdown';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+
+//Tools
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+//MUI Icons
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import AuthDropdown from '../authDropdown/AuthDropdown';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+
 const AuthLinks = ({ open }) => {
 
+  //Use states
   const [openDropdown, setOpenDropdown] = useState(false);
   const [mouseInZone, setMouseInZone] = useState(false);
 
+  //Find user
   const { status, data } = useSession();
 
+  //Handle function
   const handleBlur = () => {
     !mouseInZone && setMouseInZone(false)
   }

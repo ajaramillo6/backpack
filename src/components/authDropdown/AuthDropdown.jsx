@@ -2,29 +2,37 @@
 
 import React, { useState } from 'react'
 import styles from "./authDropdown.module.css";
+
+//Tools
 import Link from 'next/link';
+
+//Access data
+import { signIn, signOut, useSession } from 'next-auth/react';
+
+//Components
 import ThemeToggle from '../themeToggle/ThemeToggle';
+import Spinner from '../spinner/Spinner';
+
+//MUI Icons
 import CreateIcon from '@mui/icons-material/Create';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GoogleIcon from '@mui/icons-material/Google';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import Spinner from '../spinner/Spinner';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { useRouter } from 'next/navigation';
 
 const AuthDropdown = ({ setOpen, setMouseInZone }) => {
 
+  //Find authentication status
   const { status } = useSession();
 
-  const router = useRouter();
-
+  //Use states
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  //Handle functions
   const handleSignIn = async() => {
     try{
       setLoading(true);
@@ -54,6 +62,7 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
     }
   }
 
+  //Handle loading
   if(loading){
     return (
       <div className={styles.containerLoading}>
@@ -66,6 +75,7 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
     )
   }
 
+  //Handle error
   if(error){
     return (
       <div className={styles.containerError}>

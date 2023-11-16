@@ -1,9 +1,11 @@
 "use client"
 import React from 'react'
 import styles from "./card.module.css";
+import { numberFormat, timeSince } from '../Format';
+
+//Tools
 import Image from 'next/image';
 import Link from 'next/link';
-import { numberFormat, timeSince } from '../Format';
 
 const Card = ({ post, type, imgSize }) => {
 

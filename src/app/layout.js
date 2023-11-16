@@ -1,8 +1,14 @@
-import './globals.css'
+import './globals.css';
+
+//Tools
 import { Inter } from "next/font/google"
+
+//Context
+import { ThemeContextProvider } from '../context/ThemeContext'
+
+//Components
 import Navbar from '../components/navbar/Navbar'
 import Footer from '../components/footer/Footer'
-import { ThemeContextProvider } from '../context/ThemeContext'
 import ThemeProvider from '../providers/ThemeProvider'
 import MobileNavbar from '../components/mobileNavbar/mobileNavbar'
 import AuthProvider from '../providers/AuthProvider'

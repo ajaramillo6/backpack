@@ -55,11 +55,13 @@
 .confirmBtn{
     color: var(--danger);
     border: 1px solid var(--danger);
+    cursor: pointer;
 }
 
 .cancelBtn{
     color: var(--softTextColor);
     border: 1px solid var(--softTextColor);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
