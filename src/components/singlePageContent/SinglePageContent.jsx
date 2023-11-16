@@ -43,23 +43,25 @@ const SinglePageContent = ({ slug }) => {
     }
 
     const getPopular = (cat) => {
-        const { data } = useSWR(
-          `http://localhost:3000/api/popular?cat=${cat || ""}`,
-          fetcher
-        );
-        return { data }
+        if(session?.status === 'authenticated'){
+            const { data } = useSWR(
+            `http://localhost:3000/api/popular?cat=${cat || ""}`,
+            fetcher
+            );
+            return { data }
+        }
     }
 
     //Call data fetch functions
-    const { data, mutate } = getData();
-    const recommended  = getPopular(data?.catSlug);
+    const item = getData();
+    const recommended  = getPopular(item?.data?.catSlug);
 
     //Use states
     const [hideMenu, setHideMenu] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
-    const [like, setLike] = useState(data?.likes?.length);
+    const [like, setLike] = useState(item?.data?.likes?.length);
 
     //Dynamic icons
     const LikeIcon = (isLiked) ? FavoriteIcon : FavoriteBorderIcon;
@@ -67,17 +69,17 @@ const SinglePageContent = ({ slug }) => {
 
     //Use effects (Like and Follow)
     useEffect(()=>{
-        setIsLiked(data?.likes?.includes(currentUser?.name));
-    },[currentUser?.name, data?.likes])
+        setIsLiked(item?.data?.likes?.includes(currentUser?.name));
+    },[currentUser?.name, item?.data?.likes])
 
     useEffect(()=>{
-        setIsFollowing(data?.following?.includes(currentUser?.name));
-    },[currentUser?.name, data?.following])
+        setIsFollowing(item?.data?.following?.includes(currentUser?.name));
+    },[currentUser?.name, item?.data?.following])
 
     //Handle Functions
     const handleLike = async() => {
-        if(data){
-            let updatedLikes = [...data.likes];
+        if(item?.data){
+            let updatedLikes = [...item?.data?.likes];
             let index = updatedLikes.findIndex((name) => name === currentUser?.name);
             (!updatedLikes.includes(currentUser?.name)) 
                 ? (updatedLikes.push(currentUser?.name))
@@ -91,14 +93,14 @@ const SinglePageContent = ({ slug }) => {
             if(res.status === 200){
                 setLike(isLiked ? like - 1 : like + 1);
                 setIsLiked(!isLiked);
-                mutate();
+                item?.mutate();
             }
         }
     }
 
     const handleFollow = async() => {
-        if(data){
-            let updatedFollows = [...data.following];
+        if(item?.data){
+            let updatedFollows = [...item?.data?.following];
             let index = updatedFollows.findIndex((name) => name === currentUser?.name);
             (!updatedFollows.includes(currentUser?.name)) 
                 ? (updatedFollows.push(currentUser?.name))
@@ -112,7 +114,7 @@ const SinglePageContent = ({ slug }) => {
             });
             if(res.status === 200){
                 setIsFollowing(!isFollowing);
-                mutate();
+                item?.mutate();
             }
         }
     }
@@ -120,21 +122,21 @@ const SinglePageContent = ({ slug }) => {
   return (
     <>
     <div className={styles.infoContainer}>
-        {data?.img &&
+        {item?.data?.img &&
         <div className={styles.imageContainer}>
-            <Image src={data.img} alt="" fill className={styles.image} />
+            <Image src={item?.data.img} alt="" fill className={styles.image} />
         </div>}
-        <div className={data?.img ? styles.textContainer:styles.textFullContainer}>
-            <h1 className={styles.title}>{data?.title}</h1>
+        <div className={item?.data?.img ? styles.textContainer:styles.textFullContainer}>
+            <h1 className={styles.title}>{item?.data?.title}</h1>
             <div className={styles.infoWrapper}>
                 <div className={styles.userInfoWrapper}>
-                    {data?.user?.image &&
+                    {item?.data?.user?.image &&
                     <div className={styles.userImageContainer}>
-                        <Image src={data.user.image} alt="" fill className={styles.avatar} />
+                        <Image src={item?.data?.user.image} alt="" fill className={styles.avatar} />
                     </div>}
                     <div className={styles.userTextContainer}>
-                        <span className={styles.username}>{data?.user?.name}</span>
-                        <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(data?.createdAt))}</span>
+                        <span className={styles.username}>{item?.data?.user?.name}</span>
+                        <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(item?.data?.createdAt))}</span>
                     </div>
                 </div>
                 <div className={styles.iconsContainer}>
@@ -144,21 +146,21 @@ const SinglePageContent = ({ slug }) => {
                             onClick={handleLike}>
                             <LikeIcon />
                         </div>
-                        {data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(data?.likes?.length)}</div>}
+                        {item?.data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(item?.data?.likes?.length)}</div>}
                     </div>
                     <div 
                         className={(isFollowing) ? styles.iconOn:styles.icon} 
                         onClick={handleFollow}>
                         <FollowIcon />
                     </div>
-                    {(currentUser?.name === data?.userName) &&
+                    {(currentUser?.name === item?.data?.userName) &&
                     <div className={styles.icon} onClick={()=>setShowEdit(true)}>
                         <EditIcon />
                     </div>}
-                    {showEdit && <Edit post={data} setShowEdit={setShowEdit}/>}
+                    {showEdit && <Edit post={item?.data} setShowEdit={setShowEdit}/>}
                 </div>
-                <Link href={`/blog?cat=${data?.catSlug}`}>
-                    <div className={styles.category}>{data?.catSlug}</div>
+                <Link href={`/blog?cat=${item?.data?.catSlug}`}>
+                    <div className={styles.category}>{item?.data?.catSlug}</div>
                 </Link>
             </div>
         </div>
@@ -167,13 +169,13 @@ const SinglePageContent = ({ slug }) => {
         <div className={(!hideMenu && recommended?.data?.length > 1) ? styles.post:styles.postExtended}>
             <div 
                 className={styles.desc} 
-                dangerouslySetInnerHTML={{ __html:data?.desc }} 
+                dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
             />
         </div>
         <div className={styles.postSmScreen}>
             <div 
                 className={styles.desc} 
-                dangerouslySetInnerHTML={{ __html:data?.desc }} 
+                dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
             />
         </div>
         {hideMenu && <>
@@ -185,7 +187,7 @@ const SinglePageContent = ({ slug }) => {
         </>}
         {recommended?.data?.length > 1 &&
             <Recommended 
-                currPost={data} 
+                currPost={item?.data} 
                 recommended={recommended?.data} 
                 hideMenu={hideMenu} 
                 setHideMenu={setHideMenu} 
