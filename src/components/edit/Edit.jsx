@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 //Firebase tools
 import { app } from '../../app/utils/firebase';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
 //Access data
 import { fetcher } from '@/src/getData';
@@ -41,9 +41,9 @@ const Edit = ({ post, setShowEdit }) => {
     );
 
     //Use effect
-    // useEffect(()=>{
-    //   file && upload();
-    // },[file]);
+    useEffect(()=>{
+      file && upload();
+    },[file]);
 
     //Handle functions
     const upload = () => {
@@ -73,28 +73,38 @@ const Edit = ({ post, setShowEdit }) => {
     }
   
     const handleSave = async () => {
-      //If replacing photo, then delete old before entering new
-      if(post.img !== ""){
-        console.log("post contains image")
-      } else{
-        console.log("post does not contain image")
-      }
-      // //Post new edit
-      // const res = await fetch("/api/posts", {
-      //   method: "PUT",
-      //   body: JSON.stringify({
-      //     title: title ? title:post.title,
-      //     desc: post.desc,
-      //     img: media ? media:post.img,
-      //     country: (country && country !== 'Select country') ? country:post.country,
-      //     catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
-      //     slug: post.slug,
-      //   }),
-      // });
-      // mutate();
-      // if(res.status === 200){
-      //   setShowEdit(false);
-      // }
+        //If replacing photo, then delete old before entering new
+        if(post?.img && media){
+            const storage = getStorage();
+            const coverImg = post.img.split("/o/")[1].split("?")[0];
+            const coverImgRef = ref(storage, coverImg.replaceAll("%20", " "));
+            try{
+                //Delete firebase data
+                await deleteObject(coverImgRef).then(() => {
+                        console.log("Img file deleted successfully")
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+            } catch(err){
+                console.log(err);
+            }
+        }
+        //Post new edit
+        const res = await fetch("/api/posts", {
+            method: "PUT",
+            body: JSON.stringify({
+                title: title ? title:post.title,
+                desc: post.desc,
+                img: media ? media:post.img,
+                country: (country && country !== 'Select country') ? country:post.country,
+                catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
+                slug: post.slug,
+            }),
+        });
+        mutate();
+        if(res.status === 200){
+            setShowEdit(false);
+        }
     };
 
   return (
@@ -157,11 +167,12 @@ const Edit = ({ post, setShowEdit }) => {
                 <div className={styles.right}>
                     <span className={styles.text}>Cover photo</span>
                     {file && <ProgressBar progress={progress} />}
-                    {(!file && progress < 100) ? (
+                    {(!file && progress < 100) ? (<>
+                        {post?.img && 
                         <div className={styles.imgWrapper}>
                             <Image className={styles.img} src={post.img} alt="" fill />
-                        </div>
-                        ):(
+                        </div>}
+                        </>):(
                         <div className={styles.imgWrapper}>
                             <Image className={styles.img} src={media} alt="" fill />
                         </div>  
