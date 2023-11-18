@@ -10,7 +10,7 @@ import useSWR from 'swr';
 //Components
 import Pagination from '../pagination/Pagination';
 import Card from '../card/Card';
-import Spinner from '../spinner/Spinner';
+import { Skeleton } from '../skeleton/Skeleton';
 
 const CardList = ({ page, cat, type, country }) => {
 
@@ -32,7 +32,7 @@ const CardList = ({ page, cat, type, country }) => {
       </div>
       {isLoading ? 
       (<div className={styles.posts}>
-          <Spinner />
+          <Skeleton type="recents" counter={POST_PER_PAGE} />
         </div>
       ):(<>
         {data?.posts?.length > 0 ?

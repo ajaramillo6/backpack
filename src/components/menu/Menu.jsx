@@ -10,6 +10,7 @@ import { fetcher } from '@/src/getData';
 //Components
 import Spinner from '../spinner/Spinner';
 import Card from '../card/Card';
+import { Skeleton } from '../skeleton/Skeleton';
 
 const Menu = ({ type, cat, country }) => {
 
@@ -37,7 +38,9 @@ const Menu = ({ type, cat, country }) => {
           </div>
       </div>
       {favorites?.isLoading
-        ? <div className={styles.cardsWrapper}><Spinner /></div>
+        ? <div className={styles.cardsWrapper}>
+          <Skeleton counter={5} type="favorites" />
+        </div>
         :<div className={styles.cardsWrapper}>
             {favorites?.data?.map((post)=>(
               <div key={post._id}>
@@ -53,7 +56,9 @@ const Menu = ({ type, cat, country }) => {
           </div>
       </div>
       {popular?.isLoading
-      ? <div className={styles.cardsWrapper}><Spinner /></div>
+      ? <div className={styles.cardsWrapper}>
+        <Skeleton counter={5} type="popular" />
+      </div>
       :<div className={styles.cardsWrapper}>
           {popular?.data?.map((post)=>(
             <div key={post._id}>

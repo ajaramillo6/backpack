@@ -1,0 +1,109 @@
+.recentsCardSkeleton{
+    width: 100%;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    animation: skeleton 1s ease infinite alternate;
+}
+
+.favoritesCardSkeleton{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    animation: skeleton 1s ease infinite alternate;
+}
+
+.popularCardSkeleton{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    animation: skeleton 1s ease infinite alternate;
+}
+
+@keyframes skeleton {
+    to{
+        opacity:0.5;
+    }
+}
+
+.img{
+    width: 50%;
+    height: 350px;
+    border-radius: 20px;
+    background-color: var(--softBg);
+}
+
+.imgSm{
+    width: 25%;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: var(--softBg);
+}
+
+.info{
+    width: 50%;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoSm{
+    width: 75%;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user{
+    height: 30px;
+    width: 75%;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.userSm{
+    height: 15px;
+    width: 75%;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.title{
+    height: 30px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.titleSm{
+    height: 20px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.desc{
+    height: 130px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.details{
+    height: 30px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.detailsSm{
+    height: 15px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}
+
+.readMore{
+    height: 30px;
+    width: 85px;
+    border-radius: 15px;
+    background-color: var(--softBg);
+}

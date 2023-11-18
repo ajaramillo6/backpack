@@ -98,6 +98,7 @@
 }
 
 .right{
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -112,6 +113,19 @@
 .img{
     border-radius: 20px;
     object-fit: cover;
+}
+
+.editBtn{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--bg);
+    color: var(--textColor);
 }
 
 .subText{
@@ -167,5 +181,9 @@
     }
     .select{
         background-color: var(--bg);
+    }
+    .editBtn{
+        position: static;
+        text-decoration: underline;
     }
 }

@@ -179,7 +179,7 @@ const Edit = ({ post, setShowEdit }) => {
                         )
                     }
                     <label htmlFor="img">
-                        <span className={styles.subText}>Edit</span>
+                        <span className={styles.editBtn}>Edit</span>
                         <input 
                             type="file"
                             accept=".jpeg, .jpg, .png"
