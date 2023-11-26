@@ -40,17 +40,11 @@ const Edit = ({ post, setShowEdit }) => {
         fetcher
     );
 
-    //Use effect
-    useEffect(()=>{
-      file && upload();
-    },[file]);
-
     //Handle functions
     const upload = () => {
       const uniqueName = new Date().getTime() + file.name;
       const storageRef = ref(storage, uniqueName);
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on('state_changed', 
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -106,6 +100,11 @@ const Edit = ({ post, setShowEdit }) => {
             setShowEdit(false);
         }
     };
+
+    //Use effect
+    useEffect(()=>{
+        file && upload();
+    },[file]);
 
   return (
     <div className={styles.container}>
@@ -165,18 +164,31 @@ const Edit = ({ post, setShowEdit }) => {
                     </div>
                 </div>
                 <div className={styles.right}>
-                    <span className={styles.text}>Cover photo</span>
-                    {file && <ProgressBar progress={progress} />}
-                    {(!file && progress < 100) ? (<>
-                        {post?.img && 
+                    <div className={styles.splitWrapper}>
+                        <span className={styles.text}>Cover photo</span>
+                        {(file && progress > 0 && progress < 100) && <Spinner />}
+                    </div>
+                    {(!file) ? (<>
+                        {post?.img ? (
                         <div className={styles.imgWrapper}>
                             <Image className={styles.img} src={post.img} alt="" fill />
-                        </div>}
-                        </>):(
-                        <div className={styles.imgWrapper}>
-                            <Image className={styles.img} src={media} alt="" fill />
-                        </div>  
+                        </div>):(
+                        <div style={{color:"gray", fontSize:"14px"}}>
+                            Cover photo does not exist
+                        </div>)
+                        }
+                        </>):(<>
+                        {(progress > 0 && progress < 100) ? (
+                            <div className={styles.imgWrapper}>
+                                <span className={styles.progress}>Uploading: {progress.toFixed(0) + "%"}</span>
+                            </div>
+                        ):(
+                            <div className={styles.imgWrapper}>
+                                <Image className={styles.img} src={media} alt="" fill />
+                            </div>
                         )
+                        }
+                        </>)
                     }
                     <label htmlFor="img">
                         <span className={styles.editBtn}>Edit</span>

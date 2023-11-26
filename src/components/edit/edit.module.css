@@ -108,6 +108,13 @@
     position: relative;
     height: 200px;
     width: 200px;
+    justify-content: center;
+}
+
+.splitWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .img{
@@ -115,17 +122,22 @@
     object-fit: cover;
 }
 
+.progress{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--softTextColor);
+}
+
 .editBtn{
-    position: absolute;
-    right: 0px;
-    top: 0px;
     font-size: 12px;
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 5px;
     border: none;
-    background-color: var(--bg);
+    background-color: transparent;
     color: var(--textColor);
+    text-decoration: underline;
 }
 
 .subText{
@@ -181,9 +193,5 @@
     }
     .select{
         background-color: var(--bg);
-    }
-    .editBtn{
-        position: static;
-        text-decoration: underline;
     }
 }

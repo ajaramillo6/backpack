@@ -89,9 +89,125 @@ a{
 }
 
 .ql-container{
-  font-size: 20px !important;
+  font-size: 16px !important;
+  border: none !important;
 }
 
 .quill > .ql-container > .ql-editor.ql-blank::before{
   color: var(--softTextColor);
+}
+
+.quill > .ql-snow.ql-toolbar {
+  padding: 0px;
+  border: none;
+  position: sticky;
+  top: 0;
+  padding: 10px 0px;
+  background-color: var(--bg);
+  z-index: 999;
+  fill: var(--softTextColor);
+}
+
+.ql-snow.ql-toolbar .ql-fill {
+  fill: gray;
+}
+
+.ql-snow.ql-toolbar .ql-stroke {
+  stroke: gray;
+}
+
+.ql-snow.ql-toolbar:hover .ql-fill {
+  fill: var(--textColor);
+}
+
+.ql-snow.ql-toolbar:hover .ql-stroke {
+  stroke: var(--textColor);
+}
+
+.ql-snow.ql-toolbar .ql-bold:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-bold:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-italic:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-italic:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-underline:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-underline:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-strike:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-strike:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-header:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-header:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-header.ql-active .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-header.ql-active .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-indent:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-indent:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-list:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-list:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-list.ql-active .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-list.ql-active .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-link:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-link:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-clean:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-clean:hover .ql-stroke {
+  stroke: var(--mainColor);
 }

@@ -16,8 +16,8 @@ const Confirm = ({ post, setConfirm, message, subText }) => {
     const handleDelete = async () => {
         //Find firebase data
         const storage = getStorage();
-        const coverImg = post.img.split("/o/")[1].split("?")[0];
-        const coverImgRef = ref(storage, coverImg.replaceAll("%20", " "));
+        const coverImg = post?.img?.split("/o/")[1]?.split("?")[0];
+        const coverImgRef = ref(storage, coverImg?.replaceAll("%20", " "));
         try{
             //Delete firebase data
             await deleteObject(coverImgRef).then(() => {

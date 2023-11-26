@@ -124,6 +124,7 @@
 }
 
 .desc{
+    max-width: 400px;
     font-size: 18px;
     font-weight: 300;
     color: var(--softTextColor);

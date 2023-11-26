@@ -66,32 +66,12 @@
     font-size: 18px;
 }
 
-.editor{
-    display: flex;
-    gap: 15px;
-    height: 700px;
-    position: relative;
-}
-
-.addButton{
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: transparent;
-    border: 1px solid var(--softTextColor);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--softTextColor);
-    cursor: pointer;
-}
-
 .addButtonImg{
     width: 200px;
     height: 200px;
     border-radius: 20px;
     background-color: transparent;
-    border: 1px solid var(--softTextColor);
+    border: 1px dashed var(--softTextColor);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,21 +81,50 @@
     gap: 10px;
 }
 
-.add{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: var(--bg);
+.addButtonImg:hover{
+    color: var(--textColor);
 }
 
-.addButton:hover{
-    border-color: var(--textColor);
+.editor{
+    display: flex;
+    position: relative;
+    border-radius: 50px;
+    gap: 10px;
+}
+
+.addBtns{
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    height: max-content;
+}
+
+.addBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: var(--softBg);
     color: var(--textColor);
+    cursor: pointer;
 }
 
 .textArea{
     width: 100%;
-    overflow-y: auto;
+    border-radius: 20px;
+    padding: 10px;
+    border: none;
+}
+
+.addBtn:hover{
+    color: var(--mainColor);
 }
 
 .publish, .prohibit, .loading{

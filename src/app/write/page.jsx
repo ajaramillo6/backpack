@@ -1,28 +1,59 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { 
+  useEffect, 
+  useRef, 
+  useState,
+} from 'react';
 import styles from './writePage.module.css';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import UploadIcon from '@mui/icons-material/Upload';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
+
+import "react-quill/dist/quill.snow.css";
+
+import { countryListAllIsoData } from '@/src/countries';
+
+//Firebase tools
+import {
+  getStorage, 
+  ref, 
+  uploadBytesResumable, 
+  getDownloadURL, 
+} from "firebase/storage";
+import { app } from '../utils/firebase';
+
+//Tools
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { app } from '../utils/firebase';
-import { countryListAllIsoData } from '@/src/countries';
-import Image from 'next/image';
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(
+  async () => {
+    const { default: RQ } = await import('react-quill');
+    // eslint-disable-next-line react/display-name
+    return ({ forwardedRef, ...props }) => <RQ ref={forwardedRef} {...props} />;
+  },
+  { ssr: false }
+);
+
+//MUI Icons
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+
+//Components
 import Spinner from '@/src/components/spinner/Spinner';
 
 const storage = getStorage(app);
 
 const WritePage = () => {
 
+  //Find session
   const { status } = useSession();
 
   const router = useRouter();
 
+  const quillRef = useRef();
+
+  //Use states
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [value, setValue] = useState("");
@@ -30,13 +61,18 @@ const WritePage = () => {
   const [cat, setCat] = useState("");
   const [country, setCountry] = useState("");
   const [progress, setProgress] = useState(0);
+  const [imgUpload, setImgUpload] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const upload = () => {
+  useEffect(()=>{
+    file && upload(file);
+  },[file]);
+
+  //Handle initial cover image
+  const upload = (file) => {
     const uniqueName = new Date().getTime() + file.name;
-
+    //Store in firebase
     const storageRef = ref(storage, uniqueName);
-
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on('state_changed', 
       (snapshot) => {
@@ -59,10 +95,67 @@ const WritePage = () => {
     );
   }
 
-  useEffect(()=>{
-    file && upload();
-  },[file]);
+  //Handle image selection for content
+  const contentImgHandler = async (e) => {
+    e.preventDefault();
+    //Create input file
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/jpeg", "image/jpg", "image/png");
+    input.click();
+    // eslint-disable-next-line
+    input.onchange = async () => {
+      const file = input.files[0];
+      const uniqueName = new Date().getTime() + file.name;
 
+      const quillObj = quillRef?.current?.getEditor();
+      const range = quillObj?.getSelection();
+      //Store in firebase
+      const storageRef = ref(storage, uniqueName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          switch (snapshot.state) {
+            case 'paused':
+              break;
+            case 'running':
+              setImgUpload(progress);
+              break;
+          }
+        }, 
+        (error) => {
+        }, 
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            quillObj.insertEmbed(range.index, "image", downloadURL);
+            quillObj.formatText(range.index, range.index + 1, 'height', '400px');
+          });
+        }
+      );
+    };
+  }
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        desc: value,
+        img: media,
+        country,
+        catSlug: (cat !== 'Select category *') && cat,
+        slug: slugify(title),
+      }),
+    });
+    if(res.status === 200){
+      const data = await res.json();
+      router.push(`/posts/${data.slug}`);
+    }
+  };
+
+  //Handle loading and authentication
   if(status === "loading"){
     return (
       <div className={styles.container}>
@@ -82,23 +175,18 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        desc: value,
-        img: media,
-        country,
-        catSlug: (cat !== 'Select category *') && cat,
-        slug: slugify(title),
-      }),
-    });
-    if(res.status === 200){
-      const data = await res.json();
-      router.push(`/posts/${data.slug}`);
-    }
+  //Quill modules
+  const modules = {
+    toolbar: {
+      container: [
+        [{ bold:'bold' }, { italic:'italic' }, { underline:'underline' }, { strike:'strike' }],
+        [{ header: 1 }, { header: 2 }, { color: [] }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{'indent': '-1'}, {'indent': '+1'}], 
+        [{ link:'link' }],
+        [{ clean:'clean' }],
+      ],
+    },
   };
 
   return (
@@ -160,20 +248,26 @@ const WritePage = () => {
         </select>
       </div>
       <div className={styles.editor}>
-        <div className={styles.add}>
-          <button className={styles.addButton}>
-            <UploadIcon />
-          </button>
-          <button className={styles.addButton}>
-            <VideoCallIcon />
-          </button>
+        <div className={styles.addBtns}>
+          <div className={styles.addBtn}>
+            {(imgUpload > 0 && imgUpload < 100) ? (
+              <Spinner />
+            ):(
+              <AddPhotoAlternateIcon style={{fontSize:"18px"}} onClick={contentImgHandler} />
+            )}
+          </div>
+          <div className={styles.addBtn}>
+            <VideoCallIcon style={{fontSize:"18px"}} />
+          </div>
         </div>
         <ReactQuill 
+          forwardedRef={quillRef}
           className={styles.textArea} 
-          theme="bubble" 
+          theme="snow" 
           value={value} 
           onChange={setValue} 
-          placeholder="Tell your story..." 
+          modules={modules}
+          placeholder="Start typing here..." 
         />
       </div>
       <button className={(
