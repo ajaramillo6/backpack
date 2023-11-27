@@ -18,6 +18,7 @@
     "firebase": "^10.5.0",
     "next": "latest",
     "next-auth": "^4.23.2",
+    "quill-image-resize-module-react": "^3.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-quill": "^2.0.0",

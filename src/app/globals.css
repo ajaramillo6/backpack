@@ -88,6 +88,34 @@ a{
   }
 }
 
+.ql-editor ul{
+  list-style-position: inside !important;
+}
+
+.ql-editor ol{
+  list-style-position: inside !important;
+}
+
+.ql-editor img{
+  border-radius: 15px;
+}
+
+.ql-editor a{
+  color: var(--mainColor);
+}
+
+.ql-align-center{
+  text-align: center;
+}
+
+.ql-align-right{
+  text-align: right;
+}
+
+.ql-align-justify{
+  text-align: justify;
+}
+
 .ql-container{
   font-size: 16px !important;
   border: none !important;
@@ -153,6 +181,22 @@ a{
 }
 
 .ql-snow.ql-toolbar .ql-strike:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-align:hover .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-align:hover .ql-stroke {
+  stroke: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-align.ql-active .ql-fill {
+  fill: var(--mainColor);
+}
+
+.ql-snow.ql-toolbar .ql-align.ql-active .ql-stroke {
   stroke: var(--mainColor);
 }
 

@@ -152,12 +152,6 @@
     margin-right: 5px;
 }
 
-.desc p{
-    font-size: 20px;
-    font-weight: 300;
-    margin-bottom: 20px;
-}
-
 .hideIcon{
     opacity: 0;
     cursor: pointer;
@@ -261,9 +255,5 @@
     
     .title{
         font-size: 36px;
-    }
-
-    .desc p{
-        font-size: 18px;
     }
 }

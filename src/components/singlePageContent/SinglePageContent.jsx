@@ -168,13 +168,13 @@ const SinglePageContent = ({ slug }) => {
     <div className={styles.content}>
         <div className={(!hideMenu && recommended?.data?.length > 1) ? styles.post:styles.postExtended}>
             <div 
-                className={styles.desc} 
+                className="ql-editor"
                 dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
             />
         </div>
         <div className={styles.postSmScreen}>
             <div 
-                className={styles.desc} 
+                className="ql-editor" 
                 dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
             />
         </div>

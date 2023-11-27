@@ -7,8 +7,6 @@ import React, {
 } from 'react';
 import styles from './writePage.module.css';
 
-import "react-quill/dist/quill.snow.css";
-
 import { countryListAllIsoData } from '@/src/countries';
 
 //Firebase tools
@@ -26,6 +24,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import dynamic from "next/dynamic";
 
+//ReactQuill
 const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import('react-quill');
@@ -34,6 +33,11 @@ const ReactQuill = dynamic(
   },
   { ssr: false }
 );
+import { Quill } from 'react-quill';
+
+import ImageResize from "quill-image-resize-module-react";
+
+import "react-quill/dist/quill.snow.css";
 
 //MUI Icons
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -43,6 +47,8 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import Spinner from '@/src/components/spinner/Spinner';
 
 const storage = getStorage(app);
+
+Quill.register('modules/imageResize', ImageResize);
 
 const WritePage = () => {
 
@@ -129,7 +135,6 @@ const WritePage = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             quillObj.insertEmbed(range.index, "image", downloadURL);
-            quillObj.formatText(range.index, range.index + 1, 'height', '400px');
           });
         }
       );
@@ -179,15 +184,60 @@ const WritePage = () => {
   const modules = {
     toolbar: {
       container: [
-        [{ bold:'bold' }, { italic:'italic' }, { underline:'underline' }, { strike:'strike' }],
-        [{ header: 1 }, { header: 2 }, { color: [] }],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        [{'indent': '-1'}, {'indent': '+1'}], 
-        [{ link:'link' }],
-        [{ clean:'clean' }],
+        [
+          { bold:'bold' }, 
+          { italic:'italic' }, 
+          { underline:'underline' }, 
+          { strike:'strike' }, 
+        ],
+        [
+          { align: '' },
+          { align: 'center' },
+          { align: 'right' },
+          { align: 'justify' },
+        ],
+        [
+          { header: 1 }, 
+          { header: 2 }, 
+        ],
+        [
+          { list: 'ordered' }, 
+          { list: 'bullet' }
+        ],
+        [
+          {'indent': '-1'}, 
+          {'indent': '+1'}
+        ], 
+        [
+          { link:'link' }
+        ],
+        [
+          { clean:'clean' }
+        ],
       ],
     },
+    clipboard: {
+      matchVisual: false
+    },
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize']
+    },
   };
+
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'list',
+    'bullet',
+    'indent',
+    'image',
+    'video',
+    'align',
+  ];
 
   return (
     <div className={styles.container}>
@@ -267,6 +317,7 @@ const WritePage = () => {
           value={value} 
           onChange={setValue} 
           modules={modules}
+          formats={formats}
           placeholder="Start typing here..." 
         />
       </div>
