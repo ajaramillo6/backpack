@@ -237,6 +237,7 @@ const WritePage = () => {
     'image',
     'video',
     'align',
+    'link',
   ];
 
   return (
