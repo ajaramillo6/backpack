@@ -18,7 +18,6 @@ import useSWR from 'swr';
 import Spinner from '../spinner/Spinner';
 import Confirm from '../confirm/Confirm';
 import CloseIcon from '@mui/icons-material/Close';
-import ProgressBar from '../progressBar/ProgressBar';
 
 
 const storage = getStorage(app);
@@ -40,7 +39,7 @@ const Edit = ({ post, setShowEdit }) => {
         fetcher
     );
 
-    //Handle functions
+    //Handle functions\
     const upload = () => {
       const uniqueName = new Date().getTime() + file.name;
       const storageRef = ref(storage, uniqueName);
@@ -155,12 +154,6 @@ const Edit = ({ post, setShowEdit }) => {
                                 <option key={country.code} value={country.name}>{country.name}</option>
                             ))}
                         </select>
-                    </div>
-                    <div className={styles.textWrapper}>
-                        <span className={styles.text}>Content</span>
-                        <button className={styles.contentBtn}>
-                            Edit
-                        </button>
                     </div>
                 </div>
                 <div className={styles.right}>

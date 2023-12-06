@@ -131,6 +131,8 @@
     width: 65%;
     margin-top: 60px;
     transition: all 1s ease;
+    border-radius: 10px;
+    position: relative;
 }
 
 .postExtended{
@@ -141,6 +143,7 @@
     transition: all 1s ease;
     margin-right: 5px;
     opacity: 100%;
+    position: relative;
 }
 
 .postSmScreen{
@@ -150,6 +153,74 @@
     margin-top: 60px;
     transition: all 1s ease;
     margin-right: 5px;
+}
+
+.doubleClickNotify{
+    position: absolute;
+    display: none;
+    top: -35px;
+    left: 0px;
+    font-size: 14px;
+    color: var(--softTextColor);
+    background-color: var(--softBg);
+    border-radius: 30px;
+    width: max-content;
+    padding: 10px;
+}
+
+.post:hover .doubleClickNotify{
+    display: flex;
+}
+
+.postExtended:hover .doubleClickNotify{
+    display: flex;
+}
+
+.editHeader{
+    font-size: 24px;
+    color: var(--mainColor);
+}
+
+.btnsWrapper{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    margin-left: auto;
+    top: 0;
+    z-index: 9999;
+    padding: 15px 0px;
+    width: max-content;
+}
+
+.cancelBtn{
+    background-color: transparent;
+    border-radius: 30px;
+    width: max-content;
+    border: 1px solid var(--softTextColor);
+    font-size: 14px;
+    color: var(--softTextColor);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.saveBtn{
+    background-color: transparent;
+    border-radius: 30px;
+    width: max-content;
+    border: 1px solid var(--mainColor);
+    font-size: 14px;
+    color: var(--mainColor);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.postEditContent{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    margin-top: 0px; 
 }
 
 .hideIcon{
@@ -227,7 +298,7 @@
     .onHideSidbar{
         display: none;
     }
-    .post,.postExtended{
+    .post, .postExtended{
         display: none;
     }
     .postSmScreen{
@@ -236,6 +307,9 @@
 }
 
 @media screen and (max-width: 640px) {
+    .postEditContent{
+        display: none;
+    }
     .imageContainer{
         width: 100vw;
     }

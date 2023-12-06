@@ -2,7 +2,6 @@
 
 import React, { 
   useEffect, 
-  useRef, 
   useState,
 } from 'react';
 import styles from './writePage.module.css';
@@ -22,33 +21,15 @@ import { app } from '../utils/firebase';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import dynamic from "next/dynamic";
-
-//ReactQuill
-const ReactQuill = dynamic(
-  async () => {
-    const { default: RQ } = await import('react-quill');
-    // eslint-disable-next-line react/display-name
-    return ({ forwardedRef, ...props }) => <RQ ref={forwardedRef} {...props} />;
-  },
-  { ssr: false }
-);
-import { Quill } from 'react-quill';
-
-import ImageResize from "quill-image-resize-module-react";
-
-import "react-quill/dist/quill.snow.css";
 
 //MUI Icons
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
 
 //Components
 import Spinner from '@/src/components/spinner/Spinner';
+import Editor from '@/src/components/editor/Editor';
 
 const storage = getStorage(app);
-
-Quill.register('modules/imageResize', ImageResize);
 
 const WritePage = () => {
 
@@ -56,8 +37,6 @@ const WritePage = () => {
   const { status } = useSession();
 
   const router = useRouter();
-
-  const quillRef = useRef();
 
   //Use states
   const [file, setFile] = useState(null);
@@ -67,8 +46,8 @@ const WritePage = () => {
   const [cat, setCat] = useState("");
   const [country, setCountry] = useState("");
   const [progress, setProgress] = useState(0);
-  const [imgUpload, setImgUpload] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingPublish, setLoadingPublish] = useState(false);
+  const [loadingDraft, setLoadingDraft] = useState(false);
 
   useEffect(()=>{
     file && upload(file);
@@ -101,48 +80,8 @@ const WritePage = () => {
     );
   }
 
-  //Handle image selection for content
-  const contentImgHandler = async (e) => {
-    e.preventDefault();
-    //Create input file
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/jpeg", "image/jpg", "image/png");
-    input.click();
-    // eslint-disable-next-line
-    input.onchange = async () => {
-      const file = input.files[0];
-      const uniqueName = new Date().getTime() + file.name;
-
-      const quillObj = quillRef?.current?.getEditor();
-      const range = quillObj?.getSelection();
-      //Store in firebase
-      const storageRef = ref(storage, uniqueName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on('state_changed', 
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          switch (snapshot.state) {
-            case 'paused':
-              break;
-            case 'running':
-              setImgUpload(progress);
-              break;
-          }
-        }, 
-        (error) => {
-        }, 
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            quillObj.insertEmbed(range.index, "image", downloadURL);
-          });
-        }
-      );
-    };
-  }
-
-  const handleSubmit = async () => {
-    setLoading(true);
+  const handleSaveDraft = async () => {
+    setLoadingDraft(true);
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
@@ -152,6 +91,27 @@ const WritePage = () => {
         country,
         catSlug: (cat !== 'Select category *') && cat,
         slug: slugify(title),
+        published: false,
+      }),
+    });
+    if(res.status === 200){
+      const data = await res.json();
+      router.push(`/posts/${data.slug}`);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoadingPublish(true);
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        desc: value,
+        img: media,
+        country,
+        catSlug: (cat !== 'Select category *') && cat,
+        slug: slugify(title),
+        published: true,
       }),
     });
     if(res.status === 200){
@@ -179,66 +139,6 @@ const WritePage = () => {
       .replace(/[^\w\s-]/g, "")
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
-
-  //Quill modules
-  const modules = {
-    toolbar: {
-      container: [
-        [
-          { bold:'bold' }, 
-          { italic:'italic' }, 
-          { underline:'underline' }, 
-          { strike:'strike' }, 
-        ],
-        [
-          { align: '' },
-          { align: 'center' },
-          { align: 'right' },
-          { align: 'justify' },
-        ],
-        [
-          { header: 1 }, 
-          { header: 2 }, 
-        ],
-        [
-          { list: 'ordered' }, 
-          { list: 'bullet' }
-        ],
-        [
-          {'indent': '-1'}, 
-          {'indent': '+1'}
-        ], 
-        [
-          { link:'link' }
-        ],
-        [
-          { clean:'clean' }
-        ],
-      ],
-    },
-    clipboard: {
-      matchVisual: false
-    },
-    imageResize: {
-      parchment: Quill.import('parchment'),
-      modules: ['Resize', 'DisplaySize']
-    },
-  };
-
-  const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'list',
-    'bullet',
-    'indent',
-    'image',
-    'video',
-    'align',
-    'link',
-  ];
 
   return (
     <div className={styles.container}>
@@ -298,38 +198,33 @@ const WritePage = () => {
           ))}
         </select>
       </div>
-      <div className={styles.editor}>
-        <div className={styles.addBtns}>
-          <div className={styles.addBtn}>
-            {(imgUpload > 0 && imgUpload < 100) ? (
-              <Spinner />
-            ):(
-              <AddPhotoAlternateIcon style={{fontSize:"18px"}} onClick={contentImgHandler} />
-            )}
-          </div>
-          <div className={styles.addBtn}>
-            <VideoCallIcon style={{fontSize:"18px"}} />
-          </div>
-        </div>
-        <ReactQuill 
-          forwardedRef={quillRef}
-          className={styles.textArea} 
-          theme="snow" 
-          value={value} 
-          onChange={setValue} 
-          modules={modules}
-          formats={formats}
-          placeholder="Start typing here..." 
-        />
-      </div>
+      <Editor
+        value={value}
+        setValue={setValue}
+      />
       <button className={(
         (title && title !== "") && (cat && cat !== "Select category")
-        ) ? (loading ? styles.loading:styles.publish):styles.prohibit} 
+        ) ? (loadingDraft ? styles.loadingDraft:styles.draft):styles.prohibitDraft} 
+        onClick={
+          ((title && title !== "") 
+          && (cat && cat !== "Select category")) 
+          && handleSaveDraft}>
+            {loadingDraft 
+              ? <div className={styles.loadingText}>
+                  <Spinner />
+                  <span>Saving Draft...</span>
+                </div>
+              :"Save Draft"
+            }
+      </button>
+      <button className={(
+        (title && title !== "") && (cat && cat !== "Select category")
+        ) ? (loadingPublish ? styles.loading:styles.publish):styles.prohibit} 
         onClick={
           ((title && title !== "") 
           && (cat && cat !== "Select category")) 
           && handleSubmit}>
-            {loading 
+            {loadingPublish
               ? <div className={styles.loadingText}>
                   <Spinner />
                   <span>Publishing...</span>

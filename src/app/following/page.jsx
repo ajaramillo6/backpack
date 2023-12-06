@@ -14,6 +14,14 @@ const FollowingPage = ({ searchParams }) => {
   const { status } = useSession();
   const router = useRouter();
 
+  const page = parseInt(searchParams?.page) || 1;
+  const userName = searchParams?.user;
+
+  const { data, isLoading } = useSWR(
+    `http://localhost:3000/api/following?user=${userName}&page=${page}`,
+    fetcher
+  );
+
   if(status === "loading"){
     return (
       <div className={styles.container}>
@@ -22,38 +30,25 @@ const FollowingPage = ({ searchParams }) => {
     )
   };
 
-  const page = parseInt(searchParams?.page) || 1;
-  const userName = searchParams?.user;
-
-  const getData = () => {
-    if(status === 'authenticated'){
-      const { data, isLoading } = useSWR(
-        `http://localhost:3000/api/following?user=${userName}&page=${page}`,
-        fetcher
-      );
-      return { data, isLoading }
-    } else {
-      router.push("/");
-    }
+  if(status !== 'authenticated'){
+    router.push("/");
   }
-
-  const posts = getData();
 
   const POST_PER_PAGE = 4;
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 
-  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < posts?.data?.count;
+  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < data?.count;
 
   return (
     <div>
         <h1 className={styles.title}>Saved posts</h1>
-        {posts?.isLoading
+        {isLoading
             ? <div className={styles.wrapper}><Spinner /></div>
             : <div className={styles.wrapper}>
-              {posts?.data?.posts?.length > 0
+              {data?.posts?.length > 0
               ? <div>
-                  {posts?.data?.posts?.map((post)=>(
+                  {data?.posts?.map((post)=>(
                       <Card post={post} imgSize="lg" />
                   ))}
               </div>

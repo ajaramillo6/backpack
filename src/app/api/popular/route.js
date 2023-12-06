@@ -21,6 +21,7 @@ export const GET = async (req) => {
       where: {
         ...(cat && { catSlug: cat }),
         ...(country && { country }),
+        published: true,
       },
       include: { user: true },
     });

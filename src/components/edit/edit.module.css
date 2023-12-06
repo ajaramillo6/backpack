@@ -65,18 +65,6 @@
     -webkit-box-orient: vertical;
 }
 
-.contentBtn{
-    display: flex;
-    font-size: 14px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
-    color: var(--mainColor);
-    margin-left: 10px;
-}
-
 .input{
     border: none;
     background-color: transparent;

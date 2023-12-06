@@ -24,6 +24,7 @@ export const GET = async (req)=>{
             following: {
               has: userName
             },
+            published: true,
         },
     }
 

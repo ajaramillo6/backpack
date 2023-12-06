@@ -6,8 +6,6 @@ export const GET = async (req)=>{
     const { searchParams } = new URL(req.url)
 
     const page = searchParams.get("page");
-    const cat = searchParams.get("cat");
-    const country = searchParams.get("country");
     const userName = searchParams.get("user");
 
     const POST_PER_PAGE = 4;
@@ -22,10 +20,8 @@ export const GET = async (req)=>{
           },
         ],
         where: {
-            ...(cat && { catSlug: cat }),
-            ...(country && { country }),
             ...(userName && { userName }),
-            published: true,
+            published: false,
         },
     }
 

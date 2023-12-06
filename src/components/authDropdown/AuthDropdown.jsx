@@ -15,17 +15,28 @@ import Spinner from '../spinner/Spinner';
 
 //MUI Icons
 import CreateIcon from '@mui/icons-material/Create';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GoogleIcon from '@mui/icons-material/Google';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { fetcher } from '@/src/getData';
+import useSWR from 'swr';
 
 const AuthDropdown = ({ setOpen, setMouseInZone }) => {
 
   //Find authentication status
-  const { status } = useSession();
+  const { status, data } = useSession();
+
+  const page = 1;
+  const userName = data?.user?.name;
+
+  const drafts = useSWR(
+    `http://localhost:3000/api/drafts?user=${userName}&page=${page}`,
+    fetcher
+  );
 
   //Use states
   const [index, setIndex] = useState(0);
@@ -100,13 +111,17 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
       onMouseLeave={()=>setMouseInZone(false)}
       onBlur={()=>setOpen(false)}
       tabIndex="0">
+      <div className={styles.mobileContainer}>
+        <ThemeToggle />
+        <span>Change theme</span>
+      </div>
       <div className={styles.leftContainer} style={{transform:`translateX(${-210*index}px)`}}>
         <div className={styles.link} onClick={()=>handleScroll("r")}>
-            <SettingsIcon style={{fontSize:"18px"}} />
-            <div className={styles.linkSettingsText}>
-              <span>Settings</span>
-              <ChevronRightIcon style={{fontSize:"18px"}} />
-            </div>
+          <SettingsIcon style={{fontSize:"18px"}} />
+          <div className={styles.linkSettingsText}>
+            <span>Settings</span>
+            <ChevronRightIcon style={{fontSize:"18px"}} />
+          </div>
         </div>
         <div onClick={()=>setOpen(false)}>
           <Link className={styles.link} href="/write" passHref>
@@ -114,9 +129,18 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
             <span>Write</span>
           </Link>
         </div>
+        <div onClick={()=>setOpen(false)}>
+          <Link className={styles.link} href={`drafts?user=${data?.user?.name}`} passHref>
+            <EditNoteIcon style={{fontSize:"22px"}} />
+            <div className={styles.draftsWrapper}>
+              <span>Drafts</span>
+              {drafts?.data?.count > 0 && <div className={styles.number}>{drafts?.data?.count}</div>}
+            </div>
+          </Link>
+        </div>
         <div className={styles.link} onClick={()=>setOpen(false)}>
-            <LogoutIcon style={{fontSize:"18px"}} />
-            <span onClick={handleSignOut}>Logout</span>
+          <LogoutIcon style={{fontSize:"18px"}} />
+          <span onClick={handleSignOut}>Logout</span>
         </div>
       </div>
       <div className={styles.rightContainer} style={{transform:`translateX(${-210*index}px)`}}>

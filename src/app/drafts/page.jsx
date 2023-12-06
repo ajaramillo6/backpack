@@ -1,32 +1,30 @@
 "use client"
-import React from 'react';
-import styles from "./profilePage.module.css";
+import React, { useEffect, useState } from 'react';
+import styles from "./draftPage.module.css";
 
-import { fetcher } from '@/src/getData';
 import useSWR from 'swr';
+import { fetcher } from '@/src/getData';
 
 //Tools
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 //Components
-import Card from '@/src/components/card/Card';
-import Spinner from '@/src/components/spinner/Spinner';
 import Pagination from '@/src/components/pagination/Pagination';
+import Spinner from '@/src/components/spinner/Spinner';
+import Card from '@/src/components/card/Card';
+import Image from 'next/image';
 
-const ProfilePage = ({ searchParams}) => {
+const DraftPage = ({ searchParams }) => {
 
   const { status } = useSession();
   const router = useRouter();
 
   const page = parseInt(searchParams?.page) || 1;
-  const country = searchParams?.country;
-  const cat = searchParams?.cat;
   const userName = searchParams?.user;
 
   const { data, isLoading } = useSWR(
-    `http://localhost:3000/api/profile?user=${userName}&page=${page}&cat=${cat || ""}&country=${country || ""}`,
+    `http://localhost:3000/api/drafts?user=${userName}&page=${page}`,
     fetcher
   );
 
@@ -60,7 +58,7 @@ const ProfilePage = ({ searchParams}) => {
             layout='fill' />
         </div>
         }
-        <h1 className={styles.title}>{`${userName}'s posts`}</h1>
+        <h1 className={styles.title}>{`${userName}'s Drafts`}</h1>
       </div>
       {isLoading
         ? <div className={styles.wrapper}><Spinner /></div>
@@ -74,7 +72,7 @@ const ProfilePage = ({ searchParams}) => {
             :<span style={{color: "gray"}}>No posts found</span>}
         </div>
       }
-      <Pagination 
+      <Pagination
         page={page} 
         havePrev={havePrev} 
         haveNext={haveNext} 
@@ -85,4 +83,4 @@ const ProfilePage = ({ searchParams}) => {
   )
 }
 
-export default ProfilePage;
+export default DraftPage

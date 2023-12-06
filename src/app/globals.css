@@ -104,6 +104,10 @@ a{
   color: var(--mainColor);
 }
 
+.ql-editor img{
+  max-width: 100%;
+}
+
 .ql-align-center{
   text-align: center;
 }
@@ -116,6 +120,46 @@ a{
   text-align: justify;
 }
 
+.ql-indent-1{
+  text-indent: 50px;
+}
+
+.ql-indent-2{
+  text-indent: 100px;
+}
+
+.ql-indent-3{
+  text-indent: 150px;
+}
+
+.ql-indent-4{
+  text-indent: 200px;
+}
+
+.ql-indent-5{
+  text-indent: 250px;
+}
+
+.ql-indent-6{
+  text-indent: 300px;
+}
+
+.ql-indent-7{
+  text-indent: 350px;
+}
+
+.ql-indent-8{
+  text-indent: 400px;
+}
+
+.ql-indent-9{
+  text-indent: 450px;
+}
+
+.ql-indent-10{
+  text-indent: 500px;
+}
+
 .ql-container{
   font-size: 16px !important;
   border: none !important;
@@ -126,11 +170,12 @@ a{
 }
 
 .quill > .ql-snow.ql-toolbar {
-  padding: 0px;
   border: none;
   position: sticky;
   top: 0;
-  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+  padding: 25px 0px;
   background-color: var(--bg);
   z-index: 999;
   fill: var(--softTextColor);

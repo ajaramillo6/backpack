@@ -22,7 +22,7 @@ const FilterOption = ({posts, cat}) => {
         <option value={""}>Select a country</option>
         {uniqueTags.map((post)=>(
             <option value={post.country}>{post}</option>
-        )).sort()}
+        ))}
     </select>
   )
 }

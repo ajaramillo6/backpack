@@ -74,6 +74,7 @@ model Post {
   views Int @default(0)
   likes String[]
   following String[]
+  published Boolean @default(false)
   catSlug String
   cat Category @relation( fields: [catSlug], references: [slug])
   userName String

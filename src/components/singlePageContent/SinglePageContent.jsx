@@ -13,10 +13,6 @@ import { useSession } from 'next-auth/react';
 import { fetcher } from '@/src/getData';
 import useSWR from 'swr';
 
-//Components
-import Recommended from '../recommended/Recommended';
-import Edit from '../edit/Edit';
-
 //MUI Icons
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -24,6 +20,11 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+
+//Components
+import Recommended from '../recommended/Recommended';
+import Edit from '../edit/Edit';
+import Editor from '../editor/Editor';
 
 const SinglePageContent = ({ slug }) => {
 
@@ -62,12 +63,14 @@ const SinglePageContent = ({ slug }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const [like, setLike] = useState(item?.data?.likes?.length);
+    const [updateMode, setUpdateMode] = useState(false);
+    const [value, setValue] = useState("");
 
     //Dynamic icons
     const LikeIcon = (isLiked) ? FavoriteIcon : FavoriteBorderIcon;
     const FollowIcon = (isFollowing) ? CheckCircleOutlineIcon : AddCircleOutlineIcon;
 
-    //Use effects (Like and Follow)
+    //Use effects
     useEffect(()=>{
         setIsLiked(item?.data?.likes?.includes(currentUser?.name));
     },[currentUser?.name, item?.data?.likes])
@@ -75,6 +78,10 @@ const SinglePageContent = ({ slug }) => {
     useEffect(()=>{
         setIsFollowing(item?.data?.following?.includes(currentUser?.name));
     },[currentUser?.name, item?.data?.following])
+
+    useEffect(() => {
+        setValue(item?.data?.desc);
+    }, [item?.data?.desc]);
 
     //Handle Functions
     const handleLike = async() => {
@@ -119,81 +126,140 @@ const SinglePageContent = ({ slug }) => {
         }
     }
 
+    const handleDoubleClick = (e) => {
+        switch (e.detail) {
+            case 1:
+              break;
+            case 2:
+              setUpdateMode(true);
+              break;
+            case 3:
+              break;
+          }
+    }
+
+    const handleSaveEdit = async() => {
+        //Post new edit
+        const res = await fetch("/api/posts", {
+            method: "PUT",
+            body: JSON.stringify({
+                desc: item?.data?.title,
+                desc: value,
+                img: item?.data?.img,
+                country: item?.data?.country,
+                catSlug: item?.data?.catSlug,
+                slug: item?.data?.slug,
+            }),
+        });
+        item?.mutate();
+        if(res.status === 200){
+            setUpdateMode(false);
+        }
+    }
+
   return (
     <>
-    <div className={styles.infoContainer}>
-        {item?.data?.img &&
-        <div className={styles.imageContainer}>
-            <Image src={item?.data.img} alt="" fill className={styles.image} />
-        </div>}
-        <div className={item?.data?.img ? styles.textContainer:styles.textFullContainer}>
-            <h1 className={styles.title}>{item?.data?.title}</h1>
-            <div className={styles.infoWrapper}>
-                <div className={styles.userInfoWrapper}>
-                    {item?.data?.user?.image &&
-                    <div className={styles.userImageContainer}>
-                        <Image src={item?.data?.user.image} alt="" fill className={styles.avatar} />
-                    </div>}
-                    <div className={styles.userTextContainer}>
-                        <span className={styles.username}>{item?.data?.user?.name}</span>
-                        <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(item?.data?.createdAt))}</span>
-                    </div>
-                </div>
-                <div className={styles.iconsContainer}>
-                    <div className={styles.likeWrapper}>
-                        <div 
-                            className={(isLiked) ? styles.iconOn:styles.icon} 
-                            onClick={handleLike}>
-                            <LikeIcon />
+    {!updateMode && (
+        <div className={styles.infoContainer}>
+            {item?.data?.img &&
+            <div className={styles.imageContainer}>
+                <Image src={item?.data.img} alt="" fill className={styles.image} />
+            </div>}
+            <div className={item?.data?.img ? styles.textContainer:styles.textFullContainer}>
+                <h1 className={styles.title}>{item?.data?.title}</h1>
+                <div className={styles.infoWrapper}>
+                    <div className={styles.userInfoWrapper}>
+                        {item?.data?.user?.image &&
+                        <div className={styles.userImageContainer}>
+                            <Image src={item?.data?.user.image} alt="" fill className={styles.avatar} />
+                        </div>}
+                        <div className={styles.userTextContainer}>
+                            <span className={styles.username}>{item?.data?.user?.name}</span>
+                            <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(item?.data?.createdAt))}</span>
                         </div>
-                        {item?.data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(item?.data?.likes?.length)}</div>}
                     </div>
-                    <div 
-                        className={(isFollowing) ? styles.iconOn:styles.icon} 
-                        onClick={handleFollow}>
-                        <FollowIcon />
+                    <div className={styles.iconsContainer}>
+                        <div className={styles.likeWrapper}>
+                            <div 
+                                className={(isLiked) ? styles.iconOn:styles.icon} 
+                                onClick={handleLike}>
+                                <LikeIcon />
+                            </div>
+                            {item?.data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(item?.data?.likes?.length)}</div>}
+                        </div>
+                        <div 
+                            className={(isFollowing) ? styles.iconOn:styles.icon} 
+                            onClick={handleFollow}>
+                            <FollowIcon />
+                        </div>
+                        {(currentUser?.name === item?.data?.userName) &&
+                        <div className={styles.icon} onClick={()=>setShowEdit(true)}>
+                            <EditIcon />
+                        </div>}
+                        {showEdit && 
+                            <Edit 
+                                post={item?.data} 
+                                setShowEdit={setShowEdit}
+                            />
+                        }
                     </div>
-                    {(currentUser?.name === item?.data?.userName) &&
-                    <div className={styles.icon} onClick={()=>setShowEdit(true)}>
-                        <EditIcon />
-                    </div>}
-                    {showEdit && <Edit post={item?.data} setShowEdit={setShowEdit}/>}
-                </div>
-                <Link href={`/blog?cat=${item?.data?.catSlug}`}>
-                    <div className={styles.category}>{item?.data?.catSlug}</div>
-                </Link>
-            </div>
-        </div>
-    </div>
-    <div className={styles.content}>
-        <div className={(!hideMenu && recommended?.data?.length > 1) ? styles.post:styles.postExtended}>
-            <div 
-                className="ql-editor"
-                dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
-            />
-        </div>
-        <div className={styles.postSmScreen}>
-            <div 
-                className="ql-editor" 
-                dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
-            />
-        </div>
-        {hideMenu && <>
-            <div className={styles.onHideSidbar}>
-                <div className={styles.iconWrapper} onClick={()=>setHideMenu(false)}>
-                    <KeyboardDoubleArrowLeftIcon />
+                    <Link href={`/blog?cat=${item?.data?.catSlug}`}>
+                        <div className={styles.category}>{item?.data?.catSlug}</div>
+                    </Link>
                 </div>
             </div>
-        </>}
-        {recommended?.data?.length > 1 &&
-            <Recommended 
-                currPost={item?.data} 
-                recommended={recommended?.data} 
-                hideMenu={hideMenu} 
-                setHideMenu={setHideMenu} 
-            />
-        }
-    </div>
+        </div>
+    )}
+    {updateMode ? (
+        <div className={styles.postEditContent}>
+            <h1 className={styles.editHeader}>Edit Content</h1>
+            <div className={styles.btnsWrapper}>
+                <button className={styles.cancelBtn} onClick={()=>setUpdateMode(false)}>Cancel</button>
+                <button className={styles.saveBtn} onClick={handleSaveEdit}>Save</button>
+            </div>
+            <Editor value={value} setValue={setValue} />
+        </div>
+    ):(
+        <div className={styles.content}>
+            <div 
+                className={(!hideMenu && recommended?.data?.length > 1) 
+                    ? styles.post 
+                    : styles.postExtended
+                } 
+                onClick={(currentUser?.name === item?.data?.userName) && handleDoubleClick} >
+                <div 
+                    className="ql-editor"
+                    dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
+                />
+                {(currentUser?.name === item?.data?.userName) &&
+                    <div className={styles.doubleClickNotify}>
+                        <span>Double click to edit content</span>
+                    </div>
+                }
+            </div>
+            <div className={styles.postSmScreen}>
+                <div 
+                    className="ql-editor"
+                    dangerouslySetInnerHTML={{ __html:item?.data?.desc }} 
+                />
+            </div>
+            {hideMenu && <>
+                <div className={styles.onHideSidbar}>
+                    <div className={styles.iconWrapper} onClick={()=>setHideMenu(false)}>
+                        <KeyboardDoubleArrowLeftIcon />
+                    </div>
+                </div>
+            </>}
+            {recommended?.data?.length > 1 &&
+                <Recommended 
+                    currPost={item?.data} 
+                    recommended={recommended?.data} 
+                    hideMenu={hideMenu} 
+                    setHideMenu={setHideMenu} 
+                />
+            }
+        </div>
+    )}
     </>
   )
 }
