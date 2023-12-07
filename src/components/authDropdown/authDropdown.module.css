@@ -24,7 +24,7 @@
     display: none;
 }
 
-.link, .linkTheme{
+.link, .linkTheme, .linkGoogle{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,6 +36,11 @@
 .link:hover, .linkWrite:hover{
     background-color: var(--bg);
     cursor: pointer;
+}
+
+.linkGoogle:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .linkSettingsText{

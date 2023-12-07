@@ -9,7 +9,6 @@ import Link from 'next/link';
 //MUI Icons
 import HomeIcon from '@mui/icons-material/Home';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const MobileNavbar = () => {
@@ -32,11 +31,6 @@ const MobileNavbar = () => {
           </div>
         </Link>
         }
-        <Link className={styles.link} href={`/profile?user=${data?.user?.name}`} passHref>
-          <div className={styles.icon}>
-            <AccountCircleIcon />
-          </div>
-        </Link>
         <div className={styles.icon}>
           <LogoutIcon />
         </div>

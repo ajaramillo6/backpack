@@ -1,5 +1,4 @@
 .profile, .profileOut{
-    cursor: pointer;
     display: flex;
     align-items: center;
     position: relative;
@@ -30,6 +29,7 @@
 
 .btnContainer{
     position: relative;
+    cursor: pointer;
 }
 
 .btn{
@@ -40,16 +40,17 @@
     padding: 5px 10px;
     border-radius: 30px;
     border: 1px solid var(--textColor);
-    cursor: pointer;
 }
 
 .icon{
     transition: 0.5s all ease;
+    cursor: pointer;
 }
 
 .iconActive{
     transform:rotate(180deg);
     transition: 0.5s all ease;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

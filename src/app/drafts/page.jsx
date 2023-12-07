@@ -17,16 +17,28 @@ import Image from 'next/image';
 
 const DraftPage = ({ searchParams }) => {
 
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
 
   const page = parseInt(searchParams?.page) || 1;
   const userName = searchParams?.user;
+  const userEmail = data?.user?.email;
 
-  const { data, isLoading } = useSWR(
+  const items = useSWR(
     `http://localhost:3000/api/drafts?user=${userName}&page=${page}`,
     fetcher
   );
+
+  const [authorized, setAuthorized] = useState(true);
+
+  useEffect(()=>{
+    if((userEmail === 'megandunnavant4@gmail.com') || (userEmail === 'laurenjdunnavant@gmail.com')){
+      setAuthorized(true);
+    } else {
+      setAuthorized(false);
+    }
+  },[userEmail])
+
 
   if(status === "loading"){
     return (
@@ -36,7 +48,7 @@ const DraftPage = ({ searchParams }) => {
     )
   };
 
-  if(status !== 'authenticated'){
+  if((status !== 'authenticated') || !authorized){
     router.push("/");
   }
 
@@ -44,28 +56,28 @@ const DraftPage = ({ searchParams }) => {
 
   const havePrev = POST_PER_PAGE * (page - 1) > 0;
 
-  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < data?.count;
+  const haveNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < items?.data?.count;
 
   return (
     <div className={styles.container}>
       <div className={styles.profileWrapper}>
-        {data?.posts.length > 0 &&
+        {items?.data?.posts.length > 0 &&
         <div className={styles.imgWrapper}>
           <Image 
             className={styles.image}
-            src={data?.posts.filter((post)=>post.user.name === userName)[0]?.user.image} 
+            src={items?.data?.posts.filter((post)=>post.user.name === userName)[0]?.user.image} 
             alt="" 
             layout='fill' />
         </div>
         }
         <h1 className={styles.title}>{`${userName}'s Drafts`}</h1>
       </div>
-      {isLoading
+      {items?.isLoading
         ? <div className={styles.wrapper}><Spinner /></div>
         : <div className={styles.wrapper}>
-          {data?.posts?.length > 0
+          {items?.data?.posts?.length > 0
               ? <div>
-                  {data?.posts?.map((post)=>(
+                  {items?.data?.posts?.map((post)=>(
                       <Card post={post} imgSize="lg" />
                   ))}
               </div>

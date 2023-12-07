@@ -32,6 +32,7 @@ const Edit = ({ post, setShowEdit }) => {
     const [media, setMedia] = useState("");
     const [progress, setProgress] = useState(0);
     const [confirm, setConfirm] = useState(false);
+    const [isPublished, setIsPublished] = useState(post.published);
 
     //Fetch data
     const { isLoading, mutate } = useSWR(
@@ -39,7 +40,7 @@ const Edit = ({ post, setShowEdit }) => {
         fetcher
     );
 
-    //Handle functions\
+    //Handle functions
     const upload = () => {
       const uniqueName = new Date().getTime() + file.name;
       const storageRef = ref(storage, uniqueName);
@@ -92,6 +93,7 @@ const Edit = ({ post, setShowEdit }) => {
                 country: (country && country !== 'Select country') ? country:post.country,
                 catSlug: (cat && cat !== 'Select category *') ? cat:post.catSlug,
                 slug: post.slug,
+                published: isPublished,
             }),
         });
         mutate();
@@ -99,6 +101,16 @@ const Edit = ({ post, setShowEdit }) => {
             setShowEdit(false);
         }
     };
+
+    const handlePublished = (e) => {
+        const checked = e.target.checked;
+
+        if(checked){
+            setIsPublished(true);
+        } else {
+            setIsPublished(false);
+        }
+    }
 
     //Use effect
     useEffect(()=>{
@@ -154,6 +166,15 @@ const Edit = ({ post, setShowEdit }) => {
                                 <option key={country.code} value={country.name}>{country.name}</option>
                             ))}
                         </select>
+                    </div>
+                    <div className={styles.textWrapper}>
+                        <span className={styles.text}>Published</span>
+                        <input 
+                            type="checkbox" 
+                            name="published" 
+                            checked={isPublished} 
+                            onChange={(e)=>handlePublished(e)} 
+                        />
                     </div>
                 </div>
                 <div className={styles.right}>

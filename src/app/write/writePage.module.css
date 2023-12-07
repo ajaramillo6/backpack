@@ -101,7 +101,7 @@
 .draft, .prohibitDraft, .loadingDraft{
     position: absolute;
     top: 100px;
-    right: 210px;
+    right: 260px;
     padding: 10px 20px;
     background-color: transparent;
     color: var(--softTextColor);

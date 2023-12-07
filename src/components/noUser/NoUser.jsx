@@ -36,7 +36,7 @@ const NoUser = () => {
     <div className={styles.container}>
         <div className={styles.subContainer}>
             <h1>Login</h1>
-            <p className={styles.message}>Log into your Backpack account to view content</p>
+            <p className={styles.message}>Log into your Backpack account for full access</p>
             {loading 
                 ? <Spinner />
                 : <div className={styles.link} onClick={handleSignIn}>

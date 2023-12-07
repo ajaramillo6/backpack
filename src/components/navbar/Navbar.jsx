@@ -32,7 +32,6 @@ const Navbar = () => {
 
   return (
     <div className={styles.container}>
-      {status === 'authenticated' && 
       <div className={!open ? styles.lookup : styles.lookupOn}>
         {!open ? (
           <SearchIcon style={{cursor:"pointer"}} onClick={handleOpenSearch} />
@@ -46,15 +45,15 @@ const Navbar = () => {
             {q.length > 2 && <Suggestions q={q.toLowerCase()} setQ={setQ} />}
           </div>
         )}
-      </div>}
-      <div className={!open ? (status === 'authenticated' ? styles.logo:styles.logoLogout):styles.logoOut}>
+      </div>
+      <div className={!open ? styles.logo:styles.logoOut}>
         <Link className={styles.linkLogo} href='/'>
           backpack
         </Link>
       </div>
       <div className={!open ? styles.links:styles.linksOut}>
-        <Link className={!open ? styles.link:styles.linkOut} href='/'>Home</Link>
-        {status === 'authenticated' && 
+          <Link className={!open ? styles.link:styles.linkOut} href='/'>Home</Link> 
+        {status === 'authenticated' &&
           <Link className={!open ? styles.link:styles.linkOut} href={`/following?user=${data?.user?.name}`}>Saved</Link>
         }
         <AuthLinks open={open} />

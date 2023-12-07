@@ -8,7 +8,6 @@ import SinglePageContent from '@/src/components/singlePageContent/singlePageCont
 import Spinner from '@/src/components/spinner/Spinner';
 
 //Access data
-import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 const SinglePage = ({ params }) => {
@@ -19,8 +18,6 @@ const SinglePage = ({ params }) => {
   //Params
   const { slug } = params;
 
-  const router = useRouter();
-
   //Handle loading and unauthentication access
   if(status === "loading"){
     return (
@@ -28,9 +25,6 @@ const SinglePage = ({ params }) => {
         <Spinner />
       </div>
     )
-  };
-  if(status === "unauthenticated"){
-    router.push("/?user=undefined");
   };
 
   return (

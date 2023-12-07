@@ -4,6 +4,32 @@
     gap: 50px;
 }
 
+.draftBlock{
+    background-color: var(--softBg);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.publishBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    width: max-content;
+    background-color: var(--mainColor);
+    color: var(--bg);
+}
+
 .textContainer{
     width: 50%;
 }

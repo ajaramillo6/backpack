@@ -34,9 +34,11 @@ const storage = getStorage(app);
 const WritePage = () => {
 
   //Find session
-  const { status } = useSession();
+  const { status, data } = useSession();
 
   const router = useRouter();
+
+  const userEmail = data?.user?.email;
 
   //Use states
   const [file, setFile] = useState(null);
@@ -48,6 +50,15 @@ const WritePage = () => {
   const [progress, setProgress] = useState(0);
   const [loadingPublish, setLoadingPublish] = useState(false);
   const [loadingDraft, setLoadingDraft] = useState(false);
+  const [authorized, setAuthorized] = useState(true);
+
+  useEffect(()=>{
+    if((userEmail === 'megandunnavant4@gmail.com') || (userEmail === 'laurenjdunnavant@gmail.com')){
+      setAuthorized(true);
+    } else {
+      setAuthorized(false);
+    }
+  },[userEmail])
 
   useEffect(()=>{
     file && upload(file);
@@ -128,7 +139,7 @@ const WritePage = () => {
       </div>
     )
   };
-  if(status === "unauthenticated"){
+  if((status === "unauthenticated") || !authorized){
     router.push("/");
   };
 

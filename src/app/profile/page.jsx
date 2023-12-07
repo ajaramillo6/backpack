@@ -7,7 +7,6 @@ import useSWR from 'swr';
 
 //Tools
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 //Components
@@ -18,7 +17,6 @@ import Pagination from '@/src/components/pagination/Pagination';
 const ProfilePage = ({ searchParams}) => {
 
   const { status } = useSession();
-  const router = useRouter();
 
   const page = parseInt(searchParams?.page) || 1;
   const country = searchParams?.country;
@@ -37,10 +35,6 @@ const ProfilePage = ({ searchParams}) => {
       </div>
     )
   };
-
-  if(status !== 'authenticated'){
-    router.push("/");
-  }
 
   const POST_PER_PAGE = 4;
 

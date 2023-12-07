@@ -7,6 +7,7 @@ import { numberFormat, timeSince } from '@/src/components/Format';
 //Tools
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 //Access data
 import { useSession } from 'next-auth/react';
@@ -28,29 +29,27 @@ import Editor from '../editor/Editor';
 
 const SinglePageContent = ({ slug }) => {
 
+    const router = useRouter();
+
     //Find user
     const session = useSession();
     const currentUser = session?.data?.user;
 
     //Data fetching
     const getData = () => {
-        if(session?.status === 'authenticated'){
-            const { data, mutate } = useSWR(
-                `http://localhost:3000/api/posts/${slug}`,
-                fetcher
-            );
-            return { data, mutate }
-        }
+        const { data, mutate } = useSWR(
+            `http://localhost:3000/api/posts/${slug}`,
+            fetcher
+        );
+        return { data, mutate }
     }
 
     const getPopular = (cat) => {
-        if(session?.status === 'authenticated'){
-            const { data } = useSWR(
-            `http://localhost:3000/api/popular?cat=${cat || ""}`,
-            fetcher
-            );
-            return { data }
-        }
+        const { data } = useSWR(
+        `http://localhost:3000/api/popular?cat=${cat || ""}`,
+        fetcher
+        );
+        return { data }
     }
 
     //Call data fetch functions
@@ -85,6 +84,9 @@ const SinglePageContent = ({ slug }) => {
 
     //Handle Functions
     const handleLike = async() => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
         if(item?.data){
             let updatedLikes = [...item?.data?.likes];
             let index = updatedLikes.findIndex((name) => name === currentUser?.name);
@@ -106,6 +108,9 @@ const SinglePageContent = ({ slug }) => {
     }
 
     const handleFollow = async() => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
         if(item?.data){
             let updatedFollows = [...item?.data?.following];
             let index = updatedFollows.findIndex((name) => name === currentUser?.name);
@@ -127,6 +132,9 @@ const SinglePageContent = ({ slug }) => {
     }
 
     const handleDoubleClick = (e) => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
         switch (e.detail) {
             case 1:
               break;
@@ -139,6 +147,9 @@ const SinglePageContent = ({ slug }) => {
     }
 
     const handleSaveEdit = async() => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
         //Post new edit
         const res = await fetch("/api/posts", {
             method: "PUT",
@@ -149,6 +160,7 @@ const SinglePageContent = ({ slug }) => {
                 country: item?.data?.country,
                 catSlug: item?.data?.catSlug,
                 slug: item?.data?.slug,
+                published: item?.data?.published,
             }),
         });
         item?.mutate();
@@ -157,9 +169,38 @@ const SinglePageContent = ({ slug }) => {
         }
     }
 
+    const handlePublish = async () => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
+        //Publish
+        const res = await fetch("/api/posts", {
+            method: "PUT",
+            body: JSON.stringify({
+                desc: item?.data?.title,
+                desc: item?.data?.desc,
+                img: item?.data?.img,
+                country: item?.data?.country,
+                catSlug: item?.data?.catSlug,
+                slug: item?.data?.slug,
+                published: true,
+            }),
+        });
+        item?.mutate();
+        if(res.status === 200){
+            router.push("/");
+        }
+    };
+
   return (
     <>
-    {!updateMode && (
+    {!updateMode && (<>
+        {!item?.data?.published &&
+            <div className={styles.draftBlock}>
+                <span>This page is currently a draft.</span>
+                <button className={styles.publishBtn} onClick={handlePublish}>Publish</button>
+            </div>
+        }
         <div className={styles.infoContainer}>
             {item?.data?.img &&
             <div className={styles.imageContainer}>
@@ -179,19 +220,21 @@ const SinglePageContent = ({ slug }) => {
                         </div>
                     </div>
                     <div className={styles.iconsContainer}>
-                        <div className={styles.likeWrapper}>
-                            <div 
-                                className={(isLiked) ? styles.iconOn:styles.icon} 
-                                onClick={handleLike}>
-                                <LikeIcon />
+                        {item?.data?.published && (<>
+                            <div className={styles.likeWrapper}>
+                                <div 
+                                    className={(isLiked) ? styles.iconOn:styles.icon} 
+                                    onClick={handleLike}>
+                                    <LikeIcon />
+                                </div>
+                                {item?.data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(item?.data?.likes?.length)}</div>}
                             </div>
-                            {item?.data?.likes?.length > 0 && <div className={styles.likes}>{numberFormat(item?.data?.likes?.length)}</div>}
-                        </div>
-                        <div 
-                            className={(isFollowing) ? styles.iconOn:styles.icon} 
-                            onClick={handleFollow}>
-                            <FollowIcon />
-                        </div>
+                            <div 
+                                className={(isFollowing) ? styles.iconOn:styles.icon} 
+                                onClick={handleFollow}>
+                                <FollowIcon />
+                            </div>
+                        </>)}
                         {(currentUser?.name === item?.data?.userName) &&
                         <div className={styles.icon} onClick={()=>setShowEdit(true)}>
                             <EditIcon />
@@ -209,7 +252,7 @@ const SinglePageContent = ({ slug }) => {
                 </div>
             </div>
         </div>
-    )}
+    </>)}
     {updateMode ? (
         <div className={styles.postEditContent}>
             <h1 className={styles.editHeader}>Edit Content</h1>

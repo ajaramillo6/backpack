@@ -6,7 +6,6 @@ import styles from "./authLinks.module.css";
 //Tools
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 //MUI Icons
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -44,14 +43,12 @@ const AuthLinks = ({ open }) => {
   ):(
     <>
       <div className={!open ? styles.profile:styles.profileOut}>
-        <Link className={styles.link} href={`/profile?user=${data?.user?.name}`} passHref>
-          <div className={styles.profileNameWrapper}>
-            <span className={styles.profileName}>{data?.user?.name}</span>
-            <div className={styles.profilePicContainer}>
-              <Image className={styles.profilePic} alt="" src={data?.user?.image} fill />
-            </div>
+        <div className={styles.profileNameWrapper}>
+          <span className={styles.profileName}>{data?.user?.name}</span>
+          <div className={styles.profilePicContainer}>
+            <Image className={styles.profilePic} alt="" src={data?.user?.image} fill />
           </div>
-        </Link>
+        </div>
         <div 
           className={
             openDropdown 
