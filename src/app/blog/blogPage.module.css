@@ -29,4 +29,7 @@
     .pickedCategory{
         font-size: 12px;
     }
+    .content{
+        flex-direction: column;
+    }
 }
