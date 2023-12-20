@@ -10,7 +10,7 @@ import { ThemeContextProvider } from '../context/ThemeContext'
 import Navbar from '../components/navbar/Navbar'
 import Footer from '../components/footer/Footer'
 import ThemeProvider from '../providers/ThemeProvider'
-import MobileNavbar from '../components/mobileNavbar/mobileNavbar'
+import MobileNavbar from '../components/mobileNavbar/MobileNavbar'
 import AuthProvider from '../providers/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })

@@ -4,7 +4,7 @@ import React from 'react'
 import styles from "./singlePage.module.css";
 
 //Components
-import SinglePageContent from '@/src/components/singlePageContent/singlePageContent';
+import SinglePageContent from '@/src/components/singlePageContent/SinglePageContent';
 import Spinner from '@/src/components/spinner/Spinner';
 
 //Access data
