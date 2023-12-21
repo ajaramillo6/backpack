@@ -29,8 +29,6 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Spinner from '@/src/components/spinner/Spinner';
 import Editor from '@/src/components/editor/Editor';
 
-const storage = getStorage(app);
-
 const WritePage = () => {
 
   //Find session
@@ -66,6 +64,7 @@ const WritePage = () => {
 
   //Handle initial cover image
   const upload = (file) => {
+    const storage = getStorage(app);
     const uniqueName = new Date().getTime() + file?.name;
     //Store in firebase
     const storageRef = ref(storage, uniqueName);
