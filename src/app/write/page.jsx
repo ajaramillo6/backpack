@@ -66,7 +66,7 @@ const WritePage = () => {
 
   //Handle initial cover image
   const upload = (file) => {
-    const uniqueName = new Date().getTime() + file.name;
+    const uniqueName = new Date().getTime() + file?.name;
     //Store in firebase
     const storageRef = ref(storage, uniqueName);
     const uploadTask = uploadBytesResumable(storageRef, file);
