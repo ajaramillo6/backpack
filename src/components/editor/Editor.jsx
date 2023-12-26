@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from "./editor.module.css";
 
 //Tools
@@ -43,6 +43,21 @@ const Editor = ({ value, setValue }) => {
     const quillRef = useRef();
 
     const [imgUpload, setImgUpload] = useState(0);
+    const [editTool, setEditTool] = useState(null);
+
+    useEffect(() => {
+        setEditTool(
+            <ReactQuill
+                forwardedRef={quillRef}
+                className={styles.textArea} 
+                theme="snow" 
+                value={value} 
+                onChange={setValue} 
+                modules={modules}
+                formats={formats}
+                placeholder="Start typing here..."  
+            />)
+    },[]);
 
     //Handle image selection for content
     const contentImgHandler = async (e) => {
@@ -155,16 +170,7 @@ const Editor = ({ value, setValue }) => {
             )}
           </div>
         </div>
-        <ReactQuill 
-          forwardedRef={quillRef}
-          className={styles.textArea} 
-          theme="snow" 
-          value={value} 
-          onChange={setValue} 
-          modules={modules}
-          formats={formats}
-          placeholder="Start typing here..." 
-        />
+        {editTool}
       </div>
   )
 }
