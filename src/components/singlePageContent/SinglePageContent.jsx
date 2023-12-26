@@ -223,6 +223,7 @@ const SinglePageContent = ({ slug }) => {
                                 alt="" 
                                 fill 
                                 className={styles.avatar} 
+                                sizes="(max-width: 50px) 100vw, (max-height: 50px)" 
                             />
                         </div>}
                         <div className={styles.userTextContainer}>

@@ -15,17 +15,16 @@ import {
 } from "firebase/storage";
 import { app } from "../../app/utils/firebase";
 
+import { Quill } from 'react-quill';
+
 //ReactQuill
 const ReactQuill = dynamic(
     async () => {
         const { default: RQ } = await import('react-quill');
-        // eslint-disable-next-line react/display-name
         return ({ forwardedRef, ...props }) => <RQ ref={forwardedRef} {...props} />;
     },
     { ssr: false }
 );
-
-import { Quill } from 'react-quill';
 
 import ImageResize from "quill-image-resize-module-react";
 
@@ -75,6 +74,7 @@ const Editor = ({ value, setValue }) => {
                 }
             }, 
             (error) => {
+                console.log(error)
             }, 
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -151,7 +151,7 @@ const Editor = ({ value, setValue }) => {
             {(imgUpload > 0 && imgUpload < 100) ? (
               <Spinner />
             ):(
-              <AddPhotoAlternateIcon style={{fontSize:"18px"}} onClick={contentImgHandler} />
+              <AddPhotoAlternateIcon style={{fontSize:"18px"}} onMouseDown={contentImgHandler} />
             )}
           </div>
         </div>

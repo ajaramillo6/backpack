@@ -223,9 +223,9 @@ const WritePage = () => {
         (title && title !== "") && (cat && cat !== "Select category")
         ) ? (loadingDraft ? styles.loadingDraft:styles.draft):styles.prohibitDraft} 
         onClick={
-          ((title && title !== "") 
-          && (cat && cat !== "Select category")) 
-          && handleSaveDraft}>
+          (((title && title !== "") 
+          && (cat && cat !== "Select category")))
+          ? handleSaveDraft : undefined}>
             {loadingDraft 
               ? <div className={styles.loadingText}>
                   <Spinner />
@@ -238,9 +238,9 @@ const WritePage = () => {
         (title && title !== "") && (cat && cat !== "Select category")
         ) ? (loadingPublish ? styles.loading:styles.publish):styles.prohibit} 
         onClick={
-          ((title && title !== "") 
-          && (cat && cat !== "Select category")) 
-          && handleSubmit}>
+          (((title && title !== "") 
+          && (cat && cat !== "Select category"))) 
+          ? handleSubmit : undefined}>
             {loadingPublish
               ? <div className={styles.loadingText}>
                   <Spinner />
