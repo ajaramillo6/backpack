@@ -15,7 +15,7 @@ import {
   uploadBytesResumable, 
   getDownloadURL, 
 } from "firebase/storage";
-import { app } from '../utils/firebase';
+import { app } from "../utils/firebase";
 
 //Tools
 import Image from 'next/image';
@@ -169,9 +169,16 @@ const WritePage = () => {
           </label>}
           {file && <div className={styles.progress}><Spinner /></div>}
         </div>
-        :<div className={styles.imgContainer}>
-          <Image className={styles.image} src={media} alt="" fill />
-        </div>
+        :<>
+          {media && <div className={styles.imgContainer}>
+            <Image 
+              className={styles.image} 
+              src={media} alt="" 
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>}
+        </>
         }
         <div className={styles.rightWrapper}>
           <input 

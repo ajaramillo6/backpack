@@ -204,7 +204,13 @@ const SinglePageContent = ({ slug }) => {
         <div className={styles.infoContainer}>
             {item?.data?.img &&
             <div className={styles.imageContainer}>
-                <Image src={item?.data.img} alt="" fill className={styles.image} />
+                <Image 
+                    src={item?.data.img} 
+                    alt="" 
+                    fill 
+                    className={styles.image}
+                    sizes="(max-width: 768px) 100vw, 33vw" 
+                />
             </div>}
             <div className={item?.data?.img ? styles.textContainer:styles.textFullContainer}>
                 <h1 className={styles.title}>{item?.data?.title}</h1>
@@ -212,7 +218,12 @@ const SinglePageContent = ({ slug }) => {
                     <div className={styles.userInfoWrapper}>
                         {item?.data?.user?.image &&
                         <div className={styles.userImageContainer}>
-                            <Image src={item?.data?.user.image} alt="" fill className={styles.avatar} />
+                            <Image 
+                                src={item?.data?.user.image} 
+                                alt="" 
+                                fill 
+                                className={styles.avatar} 
+                            />
                         </div>}
                         <div className={styles.userTextContainer}>
                             <span className={styles.username}>{item?.data?.user?.name}</span>

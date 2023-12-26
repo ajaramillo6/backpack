@@ -39,8 +39,6 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 //Components
 import Spinner from '@/src/components/spinner/Spinner';
 
-const storage = getStorage(app);
-
 const Editor = ({ value, setValue }) => {
 
     const quillRef = useRef();
@@ -50,6 +48,7 @@ const Editor = ({ value, setValue }) => {
     //Handle image selection for content
     const contentImgHandler = async (e) => {
         e.preventDefault();
+        const storage = getStorage(app);
         //Create input file
         const input = document.createElement("input");
         input.setAttribute("type", "file");

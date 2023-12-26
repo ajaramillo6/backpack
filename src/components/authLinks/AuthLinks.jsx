@@ -45,9 +45,16 @@ const AuthLinks = ({ open }) => {
       <div className={!open ? styles.profile:styles.profileOut}>
         <div className={styles.profileNameWrapper}>
           <span className={styles.profileName}>{data?.user?.name}</span>
+          {data?.user?.image &&
           <div className={styles.profilePicContainer}>
-            <Image className={styles.profilePic} alt="" src={data?.user?.image} fill />
-          </div>
+            <Image 
+              className={styles.profilePic} 
+              alt="" 
+              src={data?.user?.image} 
+              fill 
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>}
         </div>
         <div 
           className={
