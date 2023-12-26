@@ -7,7 +7,7 @@ import { countryListAllIsoData } from '@/src/countries';
 import Image from 'next/image';
 
 //Firebase tools
-import { app } from '../../app/utils/firebase';
+import { app } from '../../utils/firebase';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
 //Access data

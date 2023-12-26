@@ -1,5 +1,5 @@
-import { getAuthSession } from "@/src/app/utils/auth";
-import prisma from "@/src/app/utils/connect";
+import { getAuthSession } from "@/src/utils/auth";
+import prisma from "@/src/utils/connect";
 import { NextResponse } from "next/server";
 
 // GET SINGLE POST

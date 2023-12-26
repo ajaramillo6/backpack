@@ -15,7 +15,7 @@ import {
   uploadBytesResumable, 
   getDownloadURL, 
 } from "firebase/storage";
-import { app } from "../utils/firebase";
+import { app } from "../../utils/firebase";
 
 //Tools
 import Image from 'next/image';

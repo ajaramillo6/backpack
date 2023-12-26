@@ -1,6 +1,6 @@
-import { getAuthSession } from "@/src/app/utils/auth";
+import { getAuthSession } from "@/src/utils/auth";
 import { NextResponse } from "next/server";
-import prisma from "@/src/app/utils/connect";
+import prisma from "@/src/utils/connect";
 
 export const GET = async (req)=>{
 

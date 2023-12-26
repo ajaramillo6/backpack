@@ -1,4 +1,4 @@
-import prisma from "@/src/app/utils/connect";
+import prisma from "@/src/utils/connect";
 import { NextResponse } from "next/server";
 
 // GET FAVORITE POSTS

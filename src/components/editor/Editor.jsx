@@ -13,7 +13,7 @@ import {
     uploadBytesResumable, 
     getDownloadURL, 
 } from "firebase/storage";
-import { app } from "../../app/utils/firebase";
+import { app } from "../../utils/firebase";
 
 import { Quill } from 'react-quill';
 
