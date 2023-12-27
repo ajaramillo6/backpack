@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from "./editor.module.css";
 
 //Tools
@@ -40,24 +40,9 @@ import Spinner from '@/src/components/spinner/Spinner';
 
 const Editor = ({ value, setValue }) => {
 
-    const quillRef = useRef();
+    const quillRef = useRef(false);
 
     const [imgUpload, setImgUpload] = useState(0);
-    const [editTool, setEditTool] = useState(null);
-
-    useEffect(() => {
-        setEditTool(
-            <ReactQuill
-                forwardedRef={quillRef}
-                className={styles.textArea} 
-                theme="snow" 
-                value={value} 
-                onChange={setValue} 
-                modules={modules}
-                formats={formats}
-                placeholder="Start typing here..."  
-            />)
-    },[]);
 
     //Handle image selection for content
     const contentImgHandler = async (e) => {
@@ -170,7 +155,16 @@ const Editor = ({ value, setValue }) => {
             )}
           </div>
         </div>
-        {editTool}
+        <ReactQuill 
+          forwardedRef={quillRef}
+          className={styles.textArea} 
+          theme="snow" 
+          value={value} 
+          onChange={setValue} 
+          modules={modules}
+          formats={formats}
+          placeholder="Start typing here..." 
+        />
       </div>
   )
 }
