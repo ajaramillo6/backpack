@@ -54,42 +54,39 @@ const Editor = ({ value, setValue }) => {
         e.preventDefault();
         const storage = getStorage(app);
         //Create input file
-        const input = document?.createElement("input");
-        if(input){
-            input.setAttribute("type", "file");
-            input.setAttribute("accept", "image/jpeg", "image/jpg", "image/png");
-            input.click();
-            // eslint-disable-next-line
-            input.onchange = async () => {
-                const file = input.files[0];
-                const uniqueName = new Date().getTime() + file.name;
-                const quillObj = quillRef?.current?.getEditor();
-                const range = quillObj?.getSelection();
-                //Store in firebase
-                const storageRef = ref(storage, uniqueName);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-                uploadTask.on('state_changed', 
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    switch (snapshot.state) {
-                    case 'paused':
-                        break;
-                    case 'running':
-                        setImgUpload(progress);
-                        break;
-                    }
-                }, 
-                (error) => {
-                    console.log(error)
-                }, 
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        quillObj.insertEmbed(range.index, "image", downloadURL);
-                    });
+        const input = typeof document !== 'undefined' && document.createElement("input");
+        input.setAttribute("type", "file");
+        input.setAttribute("accept", "image/jpeg", "image/jpg", "image/png");
+        input.click();
+        input.onchange = async () => {
+            const file = input.files[0];
+            const uniqueName = new Date().getTime() + file.name;
+            const quillObj = quillRef?.current?.getEditor();
+            const range = quillObj?.getSelection();
+            //Store in firebase
+            const storageRef = ref(storage, uniqueName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on('state_changed', 
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                switch (snapshot.state) {
+                case 'paused':
+                    break;
+                case 'running':
+                    setImgUpload(progress);
+                    break;
                 }
-                );
-            };
-        }
+            }, 
+            (error) => {
+                console.log(error)
+            }, 
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    quillObj.insertEmbed(range.index, "image", downloadURL);
+                });
+            }
+            );
+        };
     }
 
     //Quill modules
