@@ -2,6 +2,9 @@ import { getAuthSession } from "@/src/utils/auth";
 import prisma from "@/src/utils/connect";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 // GET SINGLE POST
 export const GET = async (req, { params }) => {
   const { slug } = params;

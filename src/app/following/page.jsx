@@ -9,6 +9,9 @@ import Card from '@/src/components/card/Card';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 const FollowingPage = ({ searchParams }) => {
 
   const { status } = useSession();

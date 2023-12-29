@@ -2,6 +2,9 @@ import { getAuthSession } from "@/src/utils/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/src/utils/connect";
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 export const GET = async (req)=>{
 
     const { searchParams } = new URL(req.url)

@@ -1,6 +1,9 @@
 import prisma from "@/src/utils/connect";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 // GET FAVORITE POSTS
 export const GET = async (req) => {
 

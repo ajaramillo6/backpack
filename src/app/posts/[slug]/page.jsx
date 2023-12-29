@@ -10,6 +10,9 @@ import Spinner from '@/src/components/spinner/Spinner';
 //Access data
 import { useSession } from 'next-auth/react';
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 const SinglePage = ({ params }) => {
 
   //Find authentication status
