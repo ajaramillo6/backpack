@@ -131,7 +131,7 @@ const Editor = ({ value, setValue }) => {
         imageResize: {
             parchment: Quill.import('parchment'),
             modules: ['Resize', 'DisplaySize']
-    },
+        },
     };
 
     const formats = [

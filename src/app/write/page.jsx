@@ -18,6 +18,7 @@ import {
 import { app } from "../../utils/firebase";
 
 //Tools
+import dynamic from "next/dynamic";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -27,7 +28,10 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 //Components
 import Spinner from '@/src/components/spinner/Spinner';
-import Editor from '@/src/components/editor/Editor';
+// import Editor from '@/src/components/editor/Editor';
+const Editor = dynamic(() => import('@/src/components/editor/Editor'), {
+  ssr: false,
+});
 
 const WritePage = () => {
 
