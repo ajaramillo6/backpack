@@ -8,6 +8,7 @@ import { fetcher } from '@/src/getData';
 //Tools
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 //Components
 import Pagination from '@/src/components/pagination/Pagination';
@@ -15,9 +16,9 @@ import Spinner from '@/src/components/spinner/Spinner';
 import Card from '@/src/components/card/Card';
 import Image from 'next/image';
 
-export const dynamic='force-dynamic';
+const DraftPage = () => {
 
-const DraftPage = ({ searchParams }) => {
+  const searchParams = useSearchParams();
 
   const { status, data } = useSession();
   const router = useRouter();

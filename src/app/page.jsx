@@ -6,6 +6,7 @@ import styles from './homepage.module.css';
 //Tools
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 //Components
 import Header from '../components/header/Header';
@@ -14,9 +15,9 @@ import CardList from '../components/cardList/CardList'
 import Menu from '../components/menu/Menu';
 import NoUser from '../components/noUser/NoUser';
 
-export const dynamic='force-dynamic';
+const Home = () => {
 
-const Home = ({ searchParams }) => {
+  const searchParams = useSearchParams();
 
   const { status } = useSession();
   const router = useRouter();

@@ -8,8 +8,11 @@ import Pagination from '@/src/components/pagination/Pagination';
 import Card from '@/src/components/card/Card';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
-const FollowingPage = ({ searchParams }) => {
+const FollowingPage = () => {
+
+  const searchParams = useSearchParams();
 
   const { status } = useSession();
   const router = useRouter();

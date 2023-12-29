@@ -8,13 +8,16 @@ import useSWR from 'swr';
 //Tools
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 //Components
 import Card from '@/src/components/card/Card';
 import Spinner from '@/src/components/spinner/Spinner';
 import Pagination from '@/src/components/pagination/Pagination';
 
-const ProfilePage = ({ searchParams}) => {
+const ProfilePage = () => {
+
+  const searchParams = useSearchParams();
 
   const { status } = useSession();
 
