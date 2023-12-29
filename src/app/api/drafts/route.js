@@ -20,6 +20,7 @@ export const GET = async (req)=>{
           },
         ],
         where: {
+            ...(page && { page }),
             ...(userName && { userName }),
             published: false,
         },

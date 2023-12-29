@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "./mobileNavbar.module.css";
 
 //Tools
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 
 //MUI Icons
@@ -15,6 +15,14 @@ const MobileNavbar = () => {
 
   //Find session
   const { data, status } = useSession();
+
+  const handleSignOut = async() => {
+    try{
+      await signOut();
+    }catch(err){
+      console.log(err);
+    }
+  }
   
   return (
     <div className={status === 'authenticated' ? styles.container:styles.containerLoggedOut}>
@@ -31,7 +39,7 @@ const MobileNavbar = () => {
           </div>
         </Link>
         }
-        <div className={styles.icon}>
+        <div className={styles.icon} onClick={handleSignOut}>
           <LogoutIcon />
         </div>
       </div>
