@@ -25,7 +25,6 @@ export const GET = async (req)=>{
               has: userName
             },
             published: true,
-            ...(page && { page }),
         },
     }
 

@@ -21,7 +21,6 @@ export const GET = async (req)=>{
           },
         ],
         where: {
-            ...(page && { page }),
             ...(cat && { catSlug: cat }),
             ...(country && { country }),
             published: true,
