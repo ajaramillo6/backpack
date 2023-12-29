@@ -4,6 +4,8 @@ import CardList from '@/src/components/cardList/CardList';
 import Menu from '@/src/components/menu/Menu';
 import CountryFilter from '@/src/components/countryFilter/CountryFilter';
 
+export const dynamic='force-dynamic';
+
 const BlogPage = ({ searchParams }) => {
 
   const page = parseInt(searchParams.page) || 1;
