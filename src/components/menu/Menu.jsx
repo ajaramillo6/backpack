@@ -17,7 +17,7 @@ const Menu = ({ type, cat, country }) => {
   //Data fetching
   const getData = (list) => {
     const { data, isLoading } = useSWR(
-      `http://localhost:3000/api/${list}?cat=${cat || ""}&country=${country || ""}`,
+      `https://backpack-links.vercel.app/api/${list}?cat=${cat || ""}&country=${country || ""}`,
       fetcher
     );
     return { data, isLoading }

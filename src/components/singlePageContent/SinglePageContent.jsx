@@ -38,7 +38,7 @@ const SinglePageContent = ({ slug }) => {
     //Data fetching
     const getData = () => {
         const { data, mutate } = useSWR(
-            `http://localhost:3000/api/posts/${slug}`,
+            `https://backpack-links.vercel.app/api/posts/${slug}`,
             fetcher
         );
         return { data, mutate }
@@ -46,7 +46,7 @@ const SinglePageContent = ({ slug }) => {
 
     const getPopular = (cat) => {
         const { data } = useSWR(
-        `http://localhost:3000/api/popular?cat=${cat || ""}`,
+        `https://backpack-links.vercel.app/api/popular?cat=${cat || ""}`,
         fetcher
         );
         return { data }

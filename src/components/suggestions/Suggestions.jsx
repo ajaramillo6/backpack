@@ -16,7 +16,7 @@ const Suggestions = ({ q, setQ }) => {
   //Fetch data
   const getData = (list) => {
     const { data, isLoading } = useSWR(
-      `http://localhost:3000/api/${list}`,
+      `https://backpack-links.vercel.app/api/${list}`,
       fetcher
     );
     return { data, isLoading }

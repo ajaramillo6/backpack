@@ -1,5 +1,5 @@
 export const getSinglePost = async (slug) => {
-    const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+    const res = await fetch(`https://backpack-links.vercel.app/api/posts/${slug}`, {
         cache: "no-store",
     });
 
@@ -11,7 +11,7 @@ export const getSinglePost = async (slug) => {
 };
 
 export const getPosts = async (page, cat, country)=>{
-    const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`, {
+    const res = await fetch(`https://backpack-links.vercel.app/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
@@ -21,7 +21,7 @@ export const getPosts = async (page, cat, country)=>{
 }
 
 export const getFavorites = async (cat, country)=>{
-    const res = await fetch(`http://localhost:3000/api/favorites?cat=${cat || ""}&country=${country || ""}`, {
+    const res = await fetch(`https://backpack-links.vercel.app/api/favorites?cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
@@ -31,7 +31,7 @@ export const getFavorites = async (cat, country)=>{
 }
 
 export const getPopular = async (cat, country)=>{
-    const res = await fetch(`http://localhost:3000/api/popular?cat=${cat || ""}&country=${country || ""}`, {
+    const res = await fetch(`https://backpack-links.vercel.app/api/popular?cat=${cat || ""}&country=${country || ""}`, {
         cache: "no-store",
     });
     if(!res.ok){
@@ -41,7 +41,7 @@ export const getPopular = async (cat, country)=>{
 }
 
 export const getCategories = async ()=>{
-    const res = await fetch("http://localhost:3000/api/categories", {
+    const res = await fetch("https://backpack-links.vercel.app/api/categories", {
         cache: "no-store",
     });
     if(!res.ok){

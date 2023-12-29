@@ -36,7 +36,7 @@ const Edit = ({ post, setShowEdit }) => {
 
     //Fetch data
     const { isLoading, mutate } = useSWR(
-        `http://localhost:3000/api/posts/${post.slug}`,
+        `https://backpack-links.vercel.app/api/posts/${post.slug}`,
         fetcher
     );
 

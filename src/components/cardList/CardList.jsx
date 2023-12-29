@@ -16,7 +16,7 @@ const CardList = ({ page, cat, type, country }) => {
 
   //Fetch data
   const { data, isLoading } = useSWR(
-    `http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`,
+    `https://backpack-links.vercel.app/api/posts?page=${page}&cat=${cat || ""}&country=${country || ""}`,
     fetcher
   );
 

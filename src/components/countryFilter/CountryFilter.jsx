@@ -15,7 +15,7 @@ const CountryFilter = ({cat}) => {
   //Data fetching
   const getData = () => {
     const { data, isLoading } = useSWR(
-      `http://localhost:3000/api/popular?cat=${cat || ""}`,
+      `https://backpack-links.vercel.app/api/popular?cat=${cat || ""}`,
       fetcher
     );
     return { data, isLoading }

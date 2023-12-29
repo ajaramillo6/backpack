@@ -18,7 +18,7 @@ const FollowingPage = ({ searchParams }) => {
   const userName = searchParams?.user;
 
   const { data, isLoading } = useSWR(
-    `http://localhost:3000/api/following?user=${userName}&page=${page}`,
+    `https://backpack-links.vercel.app/api/following?user=${userName}&page=${page}`,
     fetcher
   );
 

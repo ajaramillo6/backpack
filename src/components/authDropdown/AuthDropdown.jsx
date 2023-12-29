@@ -35,7 +35,7 @@ const AuthDropdown = ({ setOpen, setMouseInZone }) => {
   const userEmail = data?.user?.email;
 
   const drafts = useSWR(
-    `http://localhost:3000/api/drafts?user=${userName}&page=${page}`,
+    `https://backpack-links.vercel.app/api/drafts?user=${userName}&page=${page}`,
     fetcher
   );
 

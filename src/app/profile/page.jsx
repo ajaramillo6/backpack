@@ -24,7 +24,7 @@ const ProfilePage = ({ searchParams}) => {
   const userName = searchParams?.user;
 
   const { data, isLoading } = useSWR(
-    `http://localhost:3000/api/profile?user=${userName}&page=${page}&cat=${cat || ""}&country=${country || ""}`,
+    `https://backpack-links.vercel.app/api/profile?user=${userName}&page=${page}&cat=${cat || ""}&country=${country || ""}`,
     fetcher
   );
 
