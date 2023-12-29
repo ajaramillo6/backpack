@@ -9,6 +9,7 @@ import Image from 'next/image';
 const SearchCard = ({ post, setQ }) => {
   return (
     <div className={styles.container}>
+        {post.img &&
         <div className={styles.imageContainerSm}>
             <Image className={styles.imageSm} 
                 src={post.img} 
@@ -16,7 +17,7 @@ const SearchCard = ({ post, setQ }) => {
                 layout='fill' 
                 objectFit='cover' 
             />
-        </div>
+        </div>}
         <div className={styles.textContainerSm}>
             <div onClick={()=>setQ("")}>
                 <Link className={styles.link} href={`/profile?user=${post?.user?.name}`} passHref>

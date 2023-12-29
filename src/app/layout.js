@@ -13,6 +13,9 @@ import ThemeProvider from '../providers/ThemeProvider'
 import MobileNavbar from '../components/mobileNavbar/MobileNavbar'
 import AuthProvider from '../providers/AuthProvider'
 
+export const dynamic = 'auto'
+export const dynamicParams = true
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

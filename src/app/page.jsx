@@ -14,8 +14,6 @@ import CardList from '../components/cardList/CardList'
 import Menu from '../components/menu/Menu';
 import NoUser from '../components/noUser/NoUser';
 
-export const dynamic='force-dynamic';
-
 const Home = ({ searchParams }) => {
 
   const { status } = useSession();

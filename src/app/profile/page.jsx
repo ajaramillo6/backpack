@@ -14,7 +14,8 @@ import Card from '@/src/components/card/Card';
 import Spinner from '@/src/components/spinner/Spinner';
 import Pagination from '@/src/components/pagination/Pagination';
 
-export const dynamic='force-dynamic';
+export const dynamic = 'auto'
+export const dynamicParams = true
 
 const ProfilePage = ({ searchParams }) => {
 

@@ -15,8 +15,6 @@ import Spinner from '@/src/components/spinner/Spinner';
 import Card from '@/src/components/card/Card';
 import Image from 'next/image';
 
-export const dynamic='force-dynamic';
-
 const DraftPage = ({ searchParams }) => {
 
   const { status, data } = useSession();
