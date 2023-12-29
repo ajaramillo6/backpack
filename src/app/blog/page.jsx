@@ -3,11 +3,8 @@ import styles from "./blogPage.module.css";
 import CardList from '@/src/components/cardList/CardList';
 import Menu from '@/src/components/menu/Menu';
 import CountryFilter from '@/src/components/countryFilter/CountryFilter';
-import { useSearchParams } from 'next/navigation';
 
-const BlogPage = () => {
-
-  const searchParams = useSearchParams();
+const BlogPage = ({ searchParams }) => {
 
   const page = parseInt(searchParams.page) || 1;
   const { cat } = searchParams;
