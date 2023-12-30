@@ -17,10 +17,7 @@ const Footer = () => {
           <h1 className={styles.logoText}>backpack</h1>
         </div>
         <p className={styles.desc}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-          Quae debitis mollitia dolorum quod eligendi est explicabo 
-          necessitatibus similique perferendis, vel soluta non 
-          placeat ex accusantium ullam minima eaque doloribus cu.
+          {`© ${new Date().getFullYear().toString()} backpack`}
         </p>
         <div className={styles.icons}>
           <Link href="/" className={styles.link}>
