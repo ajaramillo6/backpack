@@ -19,7 +19,7 @@ const FilterOption = ({posts, cat}) => {
   
   return (
     <select className={styles.countryList} onChange={(e)=>router.push(`?cat=${cat || ""}&country=${e.target.value}`)}>
-        <option value={""}>Select a country</option>
+        <option value={""}>Select a state</option>
         {uniqueTags.map((post)=>(
             <option value={post.country}>{post}</option>
         ))}
