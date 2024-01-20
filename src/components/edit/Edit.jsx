@@ -155,10 +155,10 @@ const Edit = ({ post, setShowEdit }) => {
                         </select>
                     </div>
                     <div className={styles.textWrapper}>
-                        <span className={styles.text}>Country: {post.country}</span>
+                        <span className={styles.text}>State: {post.country}</span>
                     </div>
                     <div className={styles.textWrapper}>
-                        <span className={styles.text}>New Country</span>
+                        <span className={styles.text}>New State</span>
                         <select 
                             className={styles.select} 
                             onChange={(e)=>setCountry(e.target.value)}>
