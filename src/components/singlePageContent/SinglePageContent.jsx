@@ -327,6 +327,12 @@ const SinglePageContent = ({ slug }) => {
             }
         </div>
     )}
+    {updateMode && (
+        <div className={styles.btnsWrapperMobile}>
+            <button className={styles.saveBtnMobile} onClick={handleSaveEdit}>Save</button>
+            <button className={styles.cancelBtnMobile} onClick={()=>setUpdateMode(false)}>Cancel</button>
+        </div>
+    )}
     </>
   )
 }

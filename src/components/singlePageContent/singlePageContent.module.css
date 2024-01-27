@@ -223,6 +223,15 @@
     width: max-content;
 }
 
+
+.btnsWrapperMobile{
+    display: none;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0px;
+    width: 100%;
+}
+
 .cancelBtn{
     background-color: transparent;
     border-radius: 30px;
@@ -345,6 +354,35 @@
         border-radius: 30px;
         width: max-content;
         padding: 10px;
+    }
+
+    .btnsWrapper{
+        display: none;
+    }
+
+    .btnsWrapperMobile{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .saveBtnMobile{
+        padding: 10px;
+        width: 100%;
+        background-color: transparent;
+        color: var(--mainColor);
+        border: 1px solid var(--mainColor);
+        border-radius: 50px;
+        font-weight: bold;
+    }
+
+    .cancelBtnMobile{
+        padding: 10px;
+        width: 100%;
+        background-color: transparent;
+        color: var(--textColor);
+        border: 1px solid var(--textColor);
+        border-radius: 50px;
+        font-weight: bold;
     }
 }
 

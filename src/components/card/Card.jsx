@@ -46,6 +46,7 @@ const Card = ({ post, type, imgSize }) => {
             <div 
                 className={styles.desc} 
                 dangerouslySetInnerHTML={{ __html:post?.desc }} 
+                style={{ overflowY: "hidden" }}
             />}
             <div className={styles.details}>
                 <span className={styles.date}>{timeSince(new Date(Date.now())-new Date(post.createdAt))}</span>
