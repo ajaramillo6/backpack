@@ -300,3 +300,9 @@ a{
 .ql-snow.ql-toolbar .ql-clean:hover .ql-stroke {
   stroke: var(--mainColor);
 }
+
+@media screen and (max-width:640px) {
+  .quill > .ql-snow.ql-toolbar {
+    width: 100%;
+  }
+}

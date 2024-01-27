@@ -129,3 +129,42 @@
     border: 1px solid var(--softTextColor);
     cursor: not-allowed;
 }
+
+@media screen and (max-width: 650px) {
+    .topWrapper{
+        flex-direction: column;
+    }
+
+    .imgContainer{
+        width: 100%;
+    }
+
+    .addButtonImg{
+        width: 100%;
+    }
+
+    .input{
+        padding: 0px;
+        font-size: 20px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: var(--textColor);
+    }
+    
+    .select{
+        font-size: 16px;
+    }
+
+    .publish, .prohibit, .loading{
+        margin-top: 10px;
+        position: static;
+        width: 100%;
+    }
+
+    .draft, .prohibitDraft, .loadingDraft{
+        margin-top: 30px;
+        position: static;
+        width: 100%;
+    }
+}

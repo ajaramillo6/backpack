@@ -17,6 +17,21 @@
 .icon{
     color: var(--textColor);
     padding: 0px 10px;
+
+}
+
+.draftMobile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mainColor);
+    color: var(--bg);
+    height: 25px;
+    min-width: 25px;
+    border-radius: 30px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 650px) {
@@ -26,5 +41,6 @@
         bottom: 0;
         width: 100vw;
         background-color: var(--softBg);
+        z-index: 99999;
     }
 }

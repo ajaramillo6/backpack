@@ -32,6 +32,7 @@ const DraftPage = ({ searchParams }) => {
     fetcher
   );
 
+
   const [authorized, setAuthorized] = useState(true);
 
   useEffect(()=>{

@@ -118,6 +118,10 @@
     color: var(--textColor);
 }
 
+.mobileEditContent{
+    display: none;
+}
+
 .imageContainer{
     width: 50%;
     height: 350px;
@@ -332,10 +336,19 @@
     }
 }
 
-@media screen and (max-width: 640px) {
-    .postEditContent{
-        display: none;
+@media screen and (max-width: 650px){
+    .mobileEditContent{
+        display: flex;
+        font-size: 14px;
+        color: var(--softTextColor);
+        background-color: var(--softBg);
+        border-radius: 30px;
+        width: max-content;
+        padding: 10px;
     }
+}
+
+@media screen and (max-width: 640px) {
     .imageContainer{
         width: 100vw;
     }

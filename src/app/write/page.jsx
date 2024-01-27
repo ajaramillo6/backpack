@@ -206,6 +206,8 @@ const WritePage = () => {
             <option value="rivers">rivers</option>
             <option value="lake life">lake life</option>
             <option value="dessert">dessert</option>
+            <option value="books">books</option>
+            <option value="recipes">recipes</option>
         </select>
         <select 
           className={styles.select} 

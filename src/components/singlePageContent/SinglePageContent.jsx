@@ -146,6 +146,13 @@ const SinglePageContent = ({ slug }) => {
           }
     }
 
+    const handleMobileEditContent = () => {
+        if(session?.status === "unauthenticated"){
+            router.push("/?user=undefined");
+        };
+        setUpdateMode(true);
+    }
+
     const handleSaveEdit = async() => {
         if(session?.status === "unauthenticated"){
             router.push("/?user=undefined");
@@ -247,10 +254,15 @@ const SinglePageContent = ({ slug }) => {
                                 <FollowIcon />
                             </div>
                         </>)}
-                        {(currentUser?.name === item?.data?.userName) &&
-                        <div className={styles.icon} onClick={()=>setShowEdit(true)}>
-                            <EditIcon />
-                        </div>}
+                        {(currentUser?.name === item?.data?.userName) && 
+                        (<>
+                            <div className={styles.icon} onClick={()=>setShowEdit(true)}>
+                                <EditIcon />
+                            </div>
+                            <div className={styles.mobileEditContent} onClick={handleMobileEditContent}>
+                                Edit content
+                            </div>
+                        </>)}
                         {showEdit && 
                             <Edit 
                                 post={item?.data} 

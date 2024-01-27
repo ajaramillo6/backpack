@@ -51,4 +51,5 @@ export const countryListAllIsoData = [
     {"name": "Wisconsin", "number": "049"},
     {"name": "Wyoming", "number": "050"},
     {"name": "Washington D.C.", "number": "051"},
+    {"name": "International", "number": "052"},
 ];
