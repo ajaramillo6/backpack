@@ -51,7 +51,7 @@ const DraftPage = ({ searchParams }) => {
     )
   };
 
-  if((status !== 'authenticated') || !authorized){
+  if(status !== 'authenticated'){
     router.push("/");
   }
 
